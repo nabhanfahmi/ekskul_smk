@@ -38,9 +38,21 @@
 
                     <div class="bg-light rounded-4 p-4 h-100">
 
-                        <canvas id="resultChart"></canvas>
+    @if(count($skor))
 
-                    </div>
+        <canvas id="resultChart"></canvas>
+
+    @else
+
+        <div class="text-center text-muted py-5">
+
+            Tidak ada data grafik.
+
+        </div>
+
+    @endif
+
+</div>
 
                 </div>
 
@@ -49,7 +61,9 @@
 
                     <div class="d-flex flex-column gap-4">
 
-                        @foreach($rekomendasi as $item)
+                        @if(count($rekomendasi))
+
+                            @foreach($rekomendasi as $item)
 
                             <div class="bg-light rounded-4 p-4 shadow-sm">
 
@@ -72,41 +86,62 @@
 
                                         </h4>
 
-                                        <div class="mb-2">
+                                        <div class="mb-2 d-flex gap-2 flex-wrap">
 
-                                            <span class="badge bg-success">
+    <span class="badge bg-success">
 
-                                                Skor:
-                                                {{ $item['skor'] }}
+        Skor:
+        {{ $item['skor'] }}
 
-                                            </span>
+    </span>
 
-                                        </div>
+    <span class="badge bg-dark">
+
+        {{ $item['persen'] }}%
+        Cocok
+
+    </span>
+
+</div>
 
                                         <p class="text-muted mb-0">
 
-    @if($item['skor'] >= 7)
+    @if(($item['persen'] ?? 0) >= 80)
 
-        Ekstrakurikuler ini sangat direkomendasikan untuk kamu karena
-        hasil penilaian menunjukkan tingkat kecocokan yang sangat tinggi
-        berdasarkan jawaban yang telah diberikan.
+                    Ekstrakurikuler ini sangat direkomendasikan karena
+                    tingkat kecocokan mencapai
+                    {{ $item['persen'] }}%.
+                    Hasil tes menunjukkan bahwa minat, potensi,
+                    dan karakteristik yang kamu miliki sangat sesuai
+                    dengan kegiatan ekstrakurikuler ini sehingga dapat
+                    menjadi pilihan utama untuk dikembangkan.
 
-    @elseif($item['skor'] >= 5)
+                @elseif(($item['persen'] ?? 0) >= 60)
 
-        Ekstrakurikuler ini direkomendasikan karena kamu memiliki
-        minat dan kecocokan yang cukup baik pada bidang tersebut.
+                    Ekstrakurikuler ini direkomendasikan karena memiliki
+                    tingkat kecocokan sebesar
+                    {{ $item['persen'] }}%.
+                    Kamu menunjukkan ketertarikan dan potensi yang cukup
+                    baik pada bidang ini sehingga layak dipertimbangkan
+                    sebagai salah satu pilihan utama.
 
-    @elseif($item['skor'] >= 3)
+                @elseif(($item['persen'] ?? 0) >= 40)
 
-        Ekstrakurikuler ini cukup sesuai untuk kamu dan masih dapat
-        membantu mengembangkan kemampuan maupun pengalaman baru.
+                    Ekstrakurikuler ini memiliki tingkat kecocokan
+                    sebesar {{ $item['persen'] }}%.
+                    Kegiatan ini masih cukup sesuai dan dapat membantu
+                    mengembangkan kemampuan, pengalaman, serta wawasan
+                    baru yang bermanfaat bagi diri kamu.
 
-    @else
+                @else
 
-        Ekstrakurikuler ini memiliki tingkat kecocokan yang rendah,
-        namun tetap bisa dicoba untuk menambah pengalaman dan wawasan.
+                    Tingkat kecocokan pada ekstrakurikuler ini sebesar
+                    {{ $item['persen'] }}%.
+                    Meskipun bukan rekomendasi utama, kegiatan ini tetap
+                    dapat dicoba untuk memperluas pengalaman, relasi,
+                    dan keterampilan di bidang yang berbeda.
 
-    @endif
+                @endif
 
 </p>
 
@@ -117,6 +152,24 @@
                             </div>
 
                         @endforeach
+
+                        @else
+
+    <div class="alert alert-warning rounded-4">
+
+        <h5 class="mb-2">
+            Belum Ada Rekomendasi
+        </h5>
+
+        <p class="mb-0">
+            Berdasarkan jawaban yang diberikan,
+            belum ditemukan kecocokan yang cukup
+            terhadap ekstrakurikuler tertentu.
+        </p>
+
+    </div>
+
+@endif
 
                     </div>
 
@@ -134,53 +187,73 @@
 
 const chartData = @json($skor);
 
-const ctx =
+const canvas =
     document.getElementById('resultChart');
 
-new Chart(ctx, {
+if(canvas){
 
-    type: 'doughnut',
+    new Chart(canvas, {
 
-    data: {
+        type: 'doughnut',
 
-        labels: Object.keys(chartData),
+        data: {
 
-        datasets: [{
+            labels: Object.keys(chartData),
 
-            data: Object.values(chartData),
+            datasets: [{
 
-            backgroundColor: [
-                '#22c55e',
-                '#16a34a',
-                '#4ade80',
-                '#86efac',
-                '#15803d',
-                '#14532d'
-            ],
+                data: Object.values(chartData),
 
-            borderWidth: 0
+                backgroundColor: [
+                    '#22c55e',
+                    '#16a34a',
+                    '#4ade80',
+                    '#86efac',
+                    '#15803d',
+                    '#14532d'
+                ],
 
-        }]
+                borderWidth: 0
 
-    },
+            }]
 
-    options: {
+        },
 
-        responsive: true,
+        options: {
 
-        plugins: {
+            responsive: true,
 
-            legend: {
+            plugins: {
 
-                position: 'bottom'
+                legend: {
+
+                    position: 'bottom'
+
+                },
+
+                tooltip: {
+
+                    callbacks: {
+
+                        label: function(context){
+
+                            return context.label +
+                                ': ' +
+                                context.raw +
+                                '%';
+                        }
+
+                    }
+
+                }
 
             }
 
         }
 
-    }
+    });
 
-});
+}
 
 </script>
 

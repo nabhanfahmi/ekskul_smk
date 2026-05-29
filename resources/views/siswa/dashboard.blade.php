@@ -214,6 +214,216 @@ body::after{
     line-height: 1.5;
 }
 
+.welcome-hero{
+    position: relative;
+
+    overflow: hidden;
+
+    text-align: center;
+
+    padding: 70px 30px;
+
+    border-radius: 36px;
+
+    margin-bottom: 35px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(34,197,94,.16),
+            rgba(16,185,129,.08)
+        );
+
+    border: 1px solid rgba(255,255,255,.08);
+
+    backdrop-filter: blur(22px);
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.22);
+}
+
+/* GLOW */
+
+.welcome-hero::before{
+    content: '';
+
+    position: absolute;
+
+    width: 280px;
+    height: 280px;
+
+    background: rgba(34,197,94,.15);
+
+    border-radius: 50%;
+
+    top: -120px;
+    right: -120px;
+
+    filter: blur(90px);
+}
+
+/* BADGE */
+
+.welcome-badge{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 10px 18px;
+
+    border-radius: 999px;
+
+    background: rgba(255,255,255,.08);
+
+    border: 1px solid rgba(255,255,255,.10);
+
+    color: #bbf7d0;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    margin-bottom: 28px;
+}
+
+/* LOGO */
+
+.welcome-logo{
+    margin-bottom: 25px;
+
+    animation: floatLogo 4s ease-in-out infinite;
+}
+
+.welcome-logo img{
+    width: 110px;
+    height: 110px;
+
+    object-fit: contain;
+
+    filter:
+        drop-shadow(0 0 25px rgba(34,197,94,.35));
+}
+
+@keyframes floatLogo{
+    50%{
+        transform: translateY(-8px);
+    }
+}
+
+/* TITLE */
+
+.welcome-title{
+    font-size: clamp(38px, 6vw, 64px);
+
+    font-weight: 800;
+
+    margin-bottom: 20px;
+
+    line-height: 1.2;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #86efac
+        );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* TEXT */
+
+.welcome-text{
+    max-width: 760px;
+
+    margin: auto;
+
+    color: rgba(255,255,255,.78);
+
+    font-size: clamp(15px, 2vw, 20px);
+
+    line-height: 1.9;
+}
+
+/* BUTTONS */
+
+.welcome-buttons{
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+
+    flex-wrap: wrap;
+
+    margin-top: 35px;
+}
+
+.welcome-btn{
+    padding: 14px 26px;
+
+    border-radius: 18px;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    transition: .3s ease;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.primary-btn{
+    background:
+        linear-gradient(
+            135deg,
+            #22c55e,
+            #10b981
+        );
+
+    color: white;
+
+    box-shadow:
+        0 10px 25px rgba(34,197,94,.25);
+}
+
+.primary-btn:hover{
+    transform: translateY(-4px);
+
+    color: white;
+}
+
+.secondary-btn{
+    background: rgba(255,255,255,.06);
+
+    border: 1px solid rgba(255,255,255,.08);
+
+    color: white;
+}
+
+.secondary-btn:hover{
+    background: rgba(255,255,255,.10);
+
+    color: white;
+
+    transform: translateY(-4px);
+}
+
+@media(max-width:768px){
+
+    .welcome-hero{
+        padding: 55px 20px;
+        border-radius: 28px;
+    }
+
+    .welcome-logo img{
+        width: 85px;
+        height: 85px;
+    }
+
+}
+
+
 /* MOBILE */
 
 @media(max-width: 991px){
@@ -625,7 +835,8 @@ body::after{
 <div class="sidebar" id="sidebar">
 
     {{-- LOGO --}}
-<div class="logo">
+<a href="{{ route('siswa.dashboard') }}"
+   class="logo text-decoration-none">
 
     <div class="logo-icon">
 
@@ -647,18 +858,18 @@ body::after{
 
     </div>
 
-</div>
+</a>
 
     {{-- MENU --}}
     <div class="sidebar-menu">
 
-        <a href="{{ route('home') }}"
+        <!-- <a href="{{ route('home') }}"
            class="{{ request()->is('/') ? 'active' : '' }}">
 
             <i class="bi bi-house-door-fill"></i>
             <span>Beranda</span>
 
-        </a>
+        </a> -->
 
         <!-- <a href="{{ route('siswa.dashboard') }}"
            class="{{ request()->routeIs('siswa.dashboard') ? 'active' : '' }}">
@@ -684,21 +895,21 @@ body::after{
 
         </a>
 
-        <a href="{{ route('siswa.riwayat.index') }}"
+        <!-- <a href="{{ route('siswa.riwayat.index') }}"
         class="{{ request()->routeIs('siswa.riwayat.index*') ? 'active' : '' }}">
 
             <i class="bi bi-clock-history me-2"></i>
             Riwayat Konseling
 
-        </a>
+        </a> -->
 
-        <a href="{{ route('siswa.profil') }}"
+        <!-- <a href="{{ route('siswa.profil') }}"
         class="{{ request()->routeIs('siswa.profil*') ? 'active' : '' }}">
 
             <i class="bi bi-person-circle"></i>
             <span>Edit Profil</span>
 
-        </a>
+        </a> -->
 
         <!-- <a href="{{ route('siswa.jadwal') }}"
            class="{{ request()->routeIs('siswa.jadwal') ? 'active' : '' }}">
@@ -782,43 +993,81 @@ body::after{
 <div class="main-content">
 
     {{-- TOPBAR --}}
-    <div class="topbar">
+@if(
+    !request()->routeIs('siswa.ekstrakurikuler.*') &&
+    !request()->routeIs('siswa.konseling.*')
+)
 
-        <div>
+<div class="topbar">
 
-            <div class="topbar-title">
-                Dashboard Siswa
-            </div>
+    <div>
 
-            <div class="topbar-subtitle">
-                Selamat datang di sistem ekstrakurikuler modern
-            </div>
-
+        <div class="topbar-title">
+            Dashboard Siswa
         </div>
 
-        <div class="topbar-right">
-
-            <!-- <a href="{{ route('siswa.profil') }}"
-            class="profile-btn">
-
-                <i class="bi bi-pencil-square"></i>
-                Edit Profil
-
-            </a> -->
-
-            <div class="notification">
-                <i class="bi bi-bell-fill"></i>
-            </div>
-
-            <img
-                src="{{ auth()->user()->foto
-    ? asset('storage/' . auth()->user()->foto)
-    : 'https://i.pravatar.cc/200?u=' . auth()->user()->id }}"
-                class="topbar-avatar">
-
-        </div>
+        <!-- <div class="topbar-subtitle">
+            Selamat datang di sistem ekstrakurikuler SMK Syafi'i Akrom
+        </div> -->
 
     </div>
+
+    <div class="topbar-right">
+
+        <img
+            src="{{ auth()->user()->foto
+    ? asset('storage/' . auth()->user()->foto)
+    : 'https://i.pravatar.cc/200?u=' . auth()->user()->id }}"
+            class="topbar-avatar">
+
+    </div>
+
+</div>
+
+<div class="welcome-hero">
+
+    <!-- <div class="welcome-badge">
+        <i class="bi bi-stars"></i>
+        Dashboard Siswa Aktif
+    </div> -->
+
+    <div class="welcome-logo">
+        <img src="{{ asset('images/logo.png') }}" alt="Logo SMK">
+    </div>
+
+    <h1 class="welcome-title">
+        Selamat Datang
+    </h1>
+
+    <p class="welcome-text">
+        Jelajahi ekstrakurikuler terbaik,
+        kembangkan bakatmu, dan raih prestasi
+        bersama SMK Syafi'i Akrom.
+    </p>
+
+    <!-- <div class="welcome-buttons">
+
+        <a href="{{ route('siswa.ekstrakurikuler.index') }}"
+           class="welcome-btn primary-btn">
+
+            <i class="bi bi-trophy-fill"></i>
+            Lihat Ekstrakurikuler
+
+        </a>
+
+        <a href="{{ route('siswa.konseling.index') }}"
+           class="welcome-btn secondary-btn">
+
+            <i class="bi bi-chat-dots-fill"></i>
+            Mulai Konseling
+
+        </a>
+
+    </div> -->
+
+</div>
+
+@endif
 
     {{-- CONTENT --}}
     @yield('siswa-content')

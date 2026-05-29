@@ -20,7 +20,7 @@ html{
 
 body{
     background:
-        linear-gradient(rgba(2,6,23,.85), rgba(3,10,7,.90)),
+        linear-gradient(rgba(15, 23, 42, 0.25), rgba(6, 78, 59, 0.25)),
         url('{{ asset("images/bgok.jpg") }}');
 
     background-size: cover;
@@ -456,6 +456,65 @@ body::after{
     color: rgba(255,255,255,.6);
 
     font-size: 14px;
+}
+
+.footer-links a,
+.footer-contact{
+    color: rgba(255,255,255,.72);
+    text-decoration: none;
+    font-size: 14px;
+    transition: .3s;
+}
+
+.footer-links a:hover{
+    color: #86efac;
+    transform: translateX(4px);
+}
+
+.footer-contact i,
+.footer-links i{
+    color: #4ade80;
+}
+
+.footer-social{
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.footer-social a{
+    width: 45px;
+    height: 45px;
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(255,255,255,.05);
+
+    border: 1px solid rgba(255,255,255,.08);
+
+    color: white;
+
+    transition: .3s;
+}
+
+.footer-social a:hover{
+    background: linear-gradient(135deg,#22c55e,#10b981);
+    transform: translateY(-4px);
+}
+
+@media(max-width:768px){
+
+    .footer-modern{
+        text-align: center;
+    }
+
+    .footer-social{
+        justify-content: center;
+    }
+
 }
 
 /* MOBILE TOGGLE */
@@ -910,24 +969,27 @@ body::after{
 
 </div>
 
+{{-- FOOTER --}}
 <footer class="footer-modern">
 
     <div class="container">
 
-        <div class="row g-4 align-items-center">
+        <div class="row g-5">
 
-            <div class="col-lg-5">
+            {{-- BRAND --}}
+            <div class="col-lg-4">
 
-                <div class="d-flex align-items-center gap-3 flex-column flex-sm-row text-center text-sm-start">
+                <div class="d-flex align-items-start gap-3">
 
-                    <img
+                    <img 
                         src="{{ asset('images/logo.png') }}"
                         alt="Logo"
-                        class="footer-logo">
+                        class="footer-logo"
+                    >
 
                     <div>
 
-                        <h4 class="footer-title mb-1">
+                        <h4 class="footer-title mb-2">
                             Sistem Ekstrakurikuler SMK
                         </h4>
 
@@ -942,7 +1004,8 @@ body::after{
 
             </div>
 
-            <div class="col-lg-4">
+            {{-- NAVIGASI --}}
+            <div class="col-lg-3 col-md-6">
 
                 <div class="footer-links">
 
@@ -950,7 +1013,7 @@ body::after{
                         Navigasi
                     </h5>
 
-                    <div class="d-flex flex-column gap-2 mt-3">
+                    <div class="d-flex flex-column gap-3 mt-3">
 
                         <a href="{{ route('home') }}">
                             <i class="bi bi-house-door-fill me-2"></i>
@@ -973,7 +1036,45 @@ body::after{
 
             </div>
 
-            <div class="col-lg-3">
+            {{-- KONTAK --}}
+            <div class="col-lg-3 col-md-6">
+
+                <div class="footer-links">
+
+                    <h5 class="footer-heading">
+                        Kontak Info
+                    </h5>
+
+                    <div class="d-flex flex-column gap-3 mt-3">
+
+                        <div class="footer-contact">
+                            <i class="bi bi-building me-2"></i>
+                            SMK Syafi'i Akrom
+                        </div>
+
+                        <div class="footer-contact">
+                            <i class="bi bi-geo-alt-fill me-2"></i>
+                            Jl. Pelita 1 No. 322 (Perum Buaran Indah) Kota Pekalongan Jawa Tengah.
+                        </div>
+
+                        <div class="footer-contact">
+                            <i class="bi bi-telephone-fill me-2"></i>
+                            (0285) 410447
+                        </div>
+
+                        <div class="footer-contact">
+                            <i class="bi bi-envelope-fill me-2"></i>
+                            smk_sa@ymail.com
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {{-- SOSMED --}}
+            <div class="col-lg-2">
 
                 <h5 class="footer-heading">
                     Ikuti Kami
@@ -992,9 +1093,10 @@ body::after{
 
         </div>
 
+        {{-- COPYRIGHT --}}
         <div class="footer-bottom text-center">
 
-            © {{ date('Y') }} Sistem Pakar Ekstrakurikuler SMK —
+            © {{ date('Y') }} Sistem Pakar Ekstrakurikuler SMK SA —
             Dibuat dengan 💚 untuk masa depan siswa.
 
         </div>

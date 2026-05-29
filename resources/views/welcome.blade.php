@@ -27,7 +27,7 @@ html{
 
 body{
     background:
-        linear-gradient(rgba(2,6,23,.82), rgba(3,10,7,.88)),
+        linear-gradient(rgba(15, 23, 42, 0.25), rgba(6, 78, 59, 0.25)),
         url('{{ asset("images/bgok.jpg") }}');
 
     background-size: cover;
@@ -310,7 +310,7 @@ body::after{
     margin-top: 35px;
 }
 
-.hero-image-card{
+/* .hero-image-card{
     background: rgba(255,255,255,.05);
     backdrop-filter: blur(25px);
     border: 1px solid rgba(34,197,94,.15);
@@ -321,7 +321,58 @@ body::after{
         0 0 40px rgba(34,197,94,.12),
         0 20px 50px rgba(0,0,0,.35);
     position: relative;
+} */
+
+
+    /* new */
+    .hero-image-card{
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(18px);
+    border-radius: 30px;
+    padding: 40px;
+    box-shadow:
+        0 0 30px rgba(0,200,83,0.25),
+        0 0 60px rgba(0,230,118,0.08);
 }
+
+.login-input{
+    width:100%;
+    height:55px;
+    border:1px solid #d1d5db;
+    outline:none;
+    border-radius:15px;
+    padding:0 18px;
+    background:#f9fafb;
+    color:#111827;
+}
+
+.login-input::placeholder{
+    color:#9ca3af;
+}
+
+.login-input:focus{
+    background:white;
+    color:#111827;
+    border-color:#22c55e;
+    box-shadow:0 0 0 4px rgba(34,197,94,.15);
+}
+
+.toggle-password{
+    position:absolute;
+    right:18px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#d0d9ff;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.toggle-password:hover{
+    color:#00e5ff;
+}
+
+/* new */
 
 .hero-image-card::before{
     content: '';
@@ -329,7 +380,7 @@ body::after{
     inset: 0;
     border-radius: 35px;
     padding: 1px;
-    background: linear-gradient(
+    /* background: linear-gradient(
         135deg,
         rgba(34,197,94,.5),
         transparent,
@@ -339,7 +390,8 @@ body::after{
         linear-gradient(#fff 0 0) content-box,
         linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
-    mask-composite: exclude;
+    mask-composite: exclude; */
+    background: rgba(34,197,94,.05);
 }
 
 .hero-image-card img{
@@ -501,18 +553,18 @@ body::after{
 
 /* GALERI */
 .hero-image-card{
-    background: rgba(255,255,255,.05);
+    background: #ffffff;
 
-    border: 1px solid rgba(255,255,255,.08);
+    border: 1px solid rgba(0,0,0,.08);
 
-    backdrop-filter: blur(20px);
+    backdrop-filter: none;
 
     border-radius: 24px;
 
     padding: 20px;
 
     box-shadow:
-        0 10px 30px rgba(0,0,0,.20);
+        0 10px 30px rgba(0,0,0,.12);
 
     position: relative;
 
@@ -602,6 +654,12 @@ body::after{
 
 .hero-image-card h3{
     font-size: 20px;
+    color: #111827 !important;
+}
+
+.hero-image-card .text-light{
+    color: #6b7280 !important;
+    opacity: 1 !important;
 }
 
 .hero-image-card .badge{
@@ -723,6 +781,65 @@ body::after{
     color: rgba(255,255,255,.6);
 
     font-size: 14px;
+}
+
+.footer-links a,
+.footer-contact{
+    color: rgba(255,255,255,.72);
+    text-decoration: none;
+    font-size: 14px;
+    transition: .3s;
+}
+
+.footer-links a:hover{
+    color: #86efac;
+    transform: translateX(4px);
+}
+
+.footer-contact i,
+.footer-links i{
+    color: #4ade80;
+}
+
+.footer-social{
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.footer-social a{
+    width: 45px;
+    height: 45px;
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(255,255,255,.05);
+
+    border: 1px solid rgba(255,255,255,.08);
+
+    color: white;
+
+    transition: .3s;
+}
+
+.footer-social a:hover{
+    background: linear-gradient(135deg,#22c55e,#10b981);
+    transform: translateY(-4px);
+}
+
+@media(max-width:768px){
+
+    .footer-modern{
+        text-align: center;
+    }
+
+    .footer-social{
+        justify-content: center;
+    }
+
 }
 
 /* PROFIL */
@@ -947,13 +1064,13 @@ body::after{
 
                 <li class="nav-item">
 
-                    <a href="/"
+                    <!-- <a href="/"
                         class="nav-link {{ request()->is('/') ? 'active-nav' : '' }}">
 
                         <i class="bi bi-house-door-fill me-1"></i>
                         Beranda
 
-                    </a>
+                    </a> -->
 
                 </li>
 
@@ -963,35 +1080,35 @@ body::after{
 
                         @if(auth()->user()->role == 'siswa')
 
-                            <a href="{{ route('siswa.ekstrakurikuler.index') }}"
+                            <!-- <a href="{{ route('siswa.ekstrakurikuler.index') }}"
                                class="nav-link {{ request()->routeIs('siswa.ekstrakurikuler.*') ? 'active-nav' : '' }}">
 
                                 <i class="bi bi-grid-fill me-1"></i>
                                 Ekstrakurikuler
 
-                            </a>
+                            </a> -->
 
                         @else
 
-                            <a href="{{ route('ekstrakurikuler.index') }}"
+                            <!-- <a href="{{ route('ekstrakurikuler.index') }}"
                                class="nav-link {{ request()->is('ekstrakurikuler*') ? 'active-nav' : '' }}">
 
                                 <i class="bi bi-grid-fill me-1"></i>
                                 Ekstrakurikuler
 
-                            </a>
+                            </a> -->
 
                         @endif
 
                     @else
 
-                        <a href="{{ route('ekstrakurikuler.index') }}"
+                        <!-- <a href="{{ route('ekstrakurikuler.index') }}"
                            class="nav-link {{ request()->is('ekstrakurikuler*') ? 'active-nav' : '' }}">
 
                             <i class="bi bi-grid-fill me-1"></i>
                             Ekstrakurikuler
 
-                        </a>
+                        </a> -->
 
                     @endauth
 
@@ -1001,7 +1118,7 @@ body::after{
 
                     @if(auth()->user()->role == 'admin')
 
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
 
                             <a href="/admin/dashboard"
                                 class="nav-link {{ request()->is('admin/dashboard') ? 'active-nav' : '' }}">
@@ -1011,7 +1128,7 @@ body::after{
 
                             </a>
 
-                        </li>
+                        </li> -->
 
                     @else
 
@@ -1019,29 +1136,29 @@ body::after{
 
                             @if(auth()->user()->role == 'siswa')
 
-                                <a href="{{ route('siswa.konseling.index') }}"
+                                <!-- <a href="{{ route('siswa.konseling.index') }}"
                                    class="nav-link {{ request()->routeIs('siswa.konseling.*') ? 'active-nav' : '' }}">
 
                                     <i class="bi bi-chat-dots-fill me-1"></i>
                                     Konseling
 
-                                </a>
+                                </a> -->
 
                             @else
 
-                                <a href="{{ route('konseling.index') }}"
+                                <!-- <a href="{{ route('konseling.index') }}"
                                    class="nav-link {{ request()->is('konseling*') ? 'active-nav' : '' }}">
 
                                     <i class="bi bi-chat-dots-fill me-1"></i>
                                     Konseling
 
-                                </a>
+                                </a> -->
 
                             @endif
 
                         </li>
 
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
 
                             <a href="/siswa/dashboard"
                                 class="nav-link">
@@ -1051,7 +1168,7 @@ body::after{
 
                             </a>
 
-                        </li>
+                        </li> -->
 
                     @endif
 
@@ -1060,7 +1177,7 @@ body::after{
             </ul>
 
             {{-- MENU KANAN --}}
-            <ul class="navbar-nav align-items-lg-center gap-2 mt-3 mt-lg-0">
+            <!-- <ul class="navbar-nav align-items-lg-center gap-2 mt-3 mt-lg-0">
 
                 @auth
 
@@ -1104,7 +1221,7 @@ body::after{
                     </li>
 
                     {{-- LOGOUT --}}
-                    <li class="nav-item">
+                     <li class="nav-item">
 
                         <form action="{{ route('logout') }}"
                             method="POST">
@@ -1120,12 +1237,12 @@ body::after{
 
                         </form>
 
-                    </li>
+                    </li> -->
 
                 @else
 
                     {{-- LOGIN --}}
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
 
                         <a href="{{ route('login') }}"
                             class="btn btn-modern btn-outline-modern">
@@ -1134,10 +1251,10 @@ body::after{
 
                         </a>
 
-                    </li>
+                    </li> -->
 
                     {{-- REGISTER --}}
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
 
                         <a href="{{ route('register') }}"
                             class="btn btn-modern btn-primary-modern">
@@ -1146,7 +1263,7 @@ body::after{
 
                         </a>
 
-                    </li>
+                    </li> -->
 
                 @endauth
 
@@ -1188,43 +1305,43 @@ body::after{
 
                     @guest
 
-                        <a href="{{ route('login') }}"
+                        <!-- <a href="{{ route('login') }}"
                             class="btn btn-modern btn-primary-modern btn-lg">
 
                             <i class="bi bi-box-arrow-in-right me-2"></i>
                             Mulai Sekarang
 
-                        </a>
+                        </a> -->
 
-                        <a href="{{ route('register') }}"
+                        <!-- <a href="{{ route('register') }}"
                             class="btn btn-modern btn-outline-modern btn-lg">
 
                             <i class="bi bi-person-plus-fill me-2"></i>
                             Daftar
 
-                        </a>
+                        </a> -->
 
                     @else
 
                         @if(auth()->user()->role == 'admin')
 
-                            <a href="/admin/dashboard"
+                            <!-- <a href="/admin/dashboard"
                                 class="btn btn-modern btn-primary-modern btn-lg">
 
                                 <i class="bi bi-speedometer2 me-2"></i>
                                 Masuk Dashboard
 
-                            </a>
+                            </a> -->
 
                         @else
 
-                            <a href="{{ route('siswa.konseling.index') }}"
+                            <!-- <a href="{{ route('siswa.konseling.index') }}"
                                 class="btn btn-modern btn-success-modern btn-lg">
 
                                 <i class="bi bi-chat-dots-fill me-2"></i>
                                 Mulai Konseling
 
-                            </a>
+                            </a> -->
 
                         @endif
 
@@ -1236,7 +1353,7 @@ body::after{
 
             <div class="col-lg-6">
 
-    <div class="hero-image-card">
+    <!-- <div class="hero-image-card">
 
         <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
 
@@ -1310,6 +1427,86 @@ body::after{
         </div>
 
     </div>
+
+</div> -->
+
+<div class="hero-image-card">
+
+    <div class="text-center mb-4">
+
+        <img
+            src="{{ asset('images/logo.png') }}"
+            width="90"
+            class="mb-3"
+        >
+
+        <h3 class="text-white fw-bold mb-1">
+            Login User
+        </h3>
+
+        <div class="text-light opacity-75">
+            Silakan login menggunakan akun siswa
+        </div>
+
+    </div>
+
+    @if(session('error'))
+        <div class="alert alert-danger rounded-4 text-center mb-4">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    <form method="POST" action="{{ route('login') }}">
+        @csrf
+
+        <div class="mb-3">
+
+            <input
+                type="text"
+                class="form-control login-input"
+                name="nim"
+                id="nim"
+                placeholder="NIS / Nomor Induk Siswa"
+                inputmode="numeric"
+                maxlength="20"
+                required
+            >
+
+        </div>
+
+        <div class="mb-4 position-relative">
+
+            <input
+                type="password"
+                class="form-control login-input pe-5"
+                name="password"
+                id="loginPassword"
+                placeholder="Masukkan Password"
+                required
+            >
+
+            <i
+                class="fas fa-eye toggle-password"
+                onclick="togglePassword('loginPassword', this)"
+            ></i>
+
+        </div>
+
+        <button
+            type="submit"
+            class="btn btn-success w-100 rounded-pill py-3 fw-bold"
+        >
+            Login Sekarang
+        </button>
+
+    </form>
+
+    <!-- <a
+        href="{{ url('/') }}"
+        class="btn btn-outline-light w-100 rounded-pill py-3 mt-3"
+    >
+        ← Kembali ke Beranda
+    </a> -->
 
 </div>
 
@@ -1509,8 +1706,9 @@ body::after{
 
             <div class="mt-4">
 
-                <a href="{{ route('register') }}"
-                   class="btn btn-modern btn-primary-modern btn-lg">
+                <!-- <a href="{{ route('register') }}" -->
+                <a href="{{ url('/') }}"
+                class="btn btn-modern btn-primary-modern btn-lg">
 
                     <i class="bi me-2"></i>
                     Mulai Sekarang
@@ -1530,11 +1728,12 @@ body::after{
 
     <div class="container">
 
-        <div class="row g-4 align-items-center">
+        <div class="row g-5">
 
-            <div class="col-lg-5">
+            {{-- BRAND --}}
+            <div class="col-lg-4">
 
-                <div class="d-flex align-items-center gap-3">
+                <div class="d-flex align-items-start gap-3">
 
                     <img 
                         src="{{ asset('images/logo.png') }}"
@@ -1544,7 +1743,7 @@ body::after{
 
                     <div>
 
-                        <h4 class="footer-title mb-1">
+                        <h4 class="footer-title mb-2">
                             Sistem Ekstrakurikuler SMK
                         </h4>
 
@@ -1559,7 +1758,8 @@ body::after{
 
             </div>
 
-            <div class="col-lg-4">
+            {{-- NAVIGASI --}}
+            <div class="col-lg-3 col-md-6">
 
                 <div class="footer-links">
 
@@ -1567,19 +1767,20 @@ body::after{
                         Navigasi
                     </h5>
 
-                    <div class="d-flex flex-column gap-2 mt-3">
+                    <div class="d-flex flex-column gap-3 mt-3">
 
                         <a href="{{ route('home') }}">
                             <i class="bi bi-house-door-fill me-2"></i>
                             Beranda
                         </a>
 
-                        <a href="{{ route('ekstrakurikuler.index') }}">
+                        <!-- <a href="{{ route('ekstrakurikuler.index') }}">
                             <i class="bi bi-grid-fill me-2"></i>
                             Ekstrakurikuler
-                        </a>
+                        </a> -->
 
-                        <a href="{{ route('login') }}">
+                        <!-- <a href="{{ route('login') }}"> -->
+                        <a href="{{ url('/') }}">
                             <i class="bi bi-box-arrow-in-right me-2"></i>
                             Login
                         </a>
@@ -1590,7 +1791,45 @@ body::after{
 
             </div>
 
-            <div class="col-lg-3">
+            {{-- KONTAK --}}
+            <div class="col-lg-3 col-md-6">
+
+                <div class="footer-links">
+
+                    <h5 class="footer-heading">
+                        Kontak Info
+                    </h5>
+
+                    <div class="d-flex flex-column gap-3 mt-3">
+
+                        <div class="footer-contact">
+                            <i class="bi bi-building me-2"></i>
+                            SMK Syafi'i Akrom
+                        </div>
+
+                        <div class="footer-contact">
+                            <i class="bi bi-geo-alt-fill me-2"></i>
+                            Jl. Pelita 1 No. 322 (Perum Buaran Indah) Kota Pekalongan Jawa Tengah.
+                        </div>
+
+                        <div class="footer-contact">
+                            <i class="bi bi-telephone-fill me-2"></i>
+                            (0285) 410447
+                        </div>
+
+                        <div class="footer-contact">
+                            <i class="bi bi-envelope-fill me-2"></i>
+                            smk_sa@ymail.com
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {{-- SOSMED --}}
+            <div class="col-lg-2">
 
                 <h5 class="footer-heading">
                     Ikuti Kami
@@ -1609,9 +1848,10 @@ body::after{
 
         </div>
 
+        {{-- COPYRIGHT --}}
         <div class="footer-bottom text-center">
 
-            © {{ date('Y') }} Sistem Pakar Ekstrakurikuler SMK —
+            © {{ date('Y') }} Sistem Pakar Ekstrakurikuler SMK SA —
             Dibuat dengan 💚 untuk masa depan siswa.
 
         </div>
@@ -1639,6 +1879,27 @@ window.addEventListener('scroll', () => {
     }
 
 });
+
+</script>
+
+<!-- new -->
+ <script>
+
+function togglePassword(inputId, icon){
+
+    const input = document.getElementById(inputId);
+
+    if(input.type === "password"){
+        input.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+    }else{
+        input.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+    }
+
+}
 
 </script>
 

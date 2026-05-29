@@ -552,9 +552,9 @@
                                 </div>
 
                                 <small class="text-light opacity-75">
-                                    ID:
-                                    {{ $hasil->user_id }}
-                                </small>
+    NIS:
+    {{ $hasil->user->nim ?? '-' }}
+</small>
 
                             </div>
 

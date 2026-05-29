@@ -18,86 +18,152 @@ class KonselingController extends Controller
 
     public function store(Request $request)
 {
+    $jawaban = $request->jawaban ?? [];
+
+    if (empty($jawaban)) {
+
+        return back()->with(
+            'error',
+            'Pilih minimal satu jawaban.'
+        );
+
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | AMBIL SEMUA EKSTRA
+    |--------------------------------------------------------------------------
+    */
+
+    $ekstrakurikuler = Ekstrakurikuler::all();
+
     $skor = [];
 
-    foreach ($request->all() as $key => $value) {
+    foreach ($ekstrakurikuler as $ekstra) {
 
-        if (str_starts_with($key, 'jawaban_')) {
+        $totalPertanyaan = Pertanyaan::where(
+            'ekstrakurikuler_id',
+            $ekstra->id
+        )->count();
 
-            if (!empty($value)) {
+        $jawabanCocok = 0;
 
-                $skor[$value] = ($skor[$value] ?? 0) + 1;
+        foreach ($jawaban as $id) {
+
+            if ($id == $ekstra->id) {
+
+                $jawabanCocok++;
             }
         }
+
+        /*
+        |--------------------------------------------------------------------------
+        | HITUNG PERSENTASE
+        |--------------------------------------------------------------------------
+        */
+
+        $persen = $totalPertanyaan > 0
+            ? round(($jawabanCocok / $totalPertanyaan) * 100)
+            : 0;
+
+        $skor[$ekstra->id] = [
+
+            'skor' => $jawabanCocok,
+
+            'persen' => $persen
+        ];
     }
 
-    if (empty($skor)) {
-        return back()->with('error', 'Pilih minimal satu jawaban YA.');
-    }
+    /*
+    |--------------------------------------------------------------------------
+    | SORTING BERDASARKAN PERSENTASE
+    |--------------------------------------------------------------------------
+    */
 
-    arsort($skor);
+    uasort($skor, function ($a, $b) {
 
-/*
-|--------------------------------------------------------------------------
-| AMBIL 3 SKOR TERATAS
-|--------------------------------------------------------------------------
-*/
+        return $b['persen'] <=> $a['persen'];
+
+    });
 
     $topSkor = array_slice($skor, 0, 3, true);
 
-    $rekomendasi = [];
+$rekomendasi = [];
 
-    foreach ($topSkor as $id => $nilai) {
+foreach ($topSkor as $id => $data) {
 
-        $ekstra = Ekstrakurikuler::find($id);
-
-        if ($ekstra) {
-            $rekomendasi[] = [
-                'id' => $ekstra->id,
-                'nama' => $ekstra->nama,
-                'deskripsi' => $ekstra->deskripsi,
-                'gambar' => $ekstra->gambar,
-                'skor' => $nilai
-            ];
-        }
+    // Jangan tampilkan jika 0%
+    if ($data['persen'] <= 0) {
+        continue;
     }
 
-/*
-|--------------------------------------------------------------------------
-| HASIL UTAMA
-|--------------------------------------------------------------------------
-*/
+    $ekstra = Ekstrakurikuler::find($id);
+
+    if ($ekstra) {
+
+        $rekomendasi[] = [
+
+            'id' => $ekstra->id,
+
+            'nama' => $ekstra->nama,
+
+            'deskripsi' => $ekstra->deskripsi,
+
+            'gambar' => $ekstra->gambar,
+
+            'skor' => $data['skor'],
+
+            'persen' => $data['persen']
+
+        ];
+    }
+}
+
+    /*
+    |--------------------------------------------------------------------------
+    | HASIL
+    |--------------------------------------------------------------------------
+    */
 
     $hasil = collect($rekomendasi)
         ->pluck('nama')
         ->join(', ');
 
     HasilKonseling::create([
-    'user_id' => auth()->id(),
 
-    'minat' => $hasil,
+        'user_id' => auth()->id(),
 
-    'ekstrakurikuler_id' => $rekomendasi[0]['id'] ?? null,
+        'minat' => $hasil,
 
-    // SIMPAN JSON REKOMENDASI
-    'hasil' => json_encode($rekomendasi)
-]);
+        'ekstrakurikuler_id' =>
+            $rekomendasi[0]['id'] ?? null,
 
-            $chartData = [];
+        'hasil' => json_encode($rekomendasi)
 
-    foreach ($skor as $id => $total) {
+    ]);
 
-        $nama = Ekstrakurikuler::find($id)?->nama;
+    /*
+    |--------------------------------------------------------------------------
+    | CHART
+    |--------------------------------------------------------------------------
+    */
 
-        if ($nama) {
-            $chartData[$nama] = $total;
-        }
+    $chartData = [];
+
+    foreach ($rekomendasi as $item) {
+
+        $chartData[$item['nama']] =
+            $item['persen'];
     }
 
-            return view('siswa.konseling.hasil', [
+    return view('siswa.konseling.hasil', [
+
         'hasil' => $hasil,
+
         'rekomendasi' => $rekomendasi,
+
         'skor' => $chartData
+
     ]);
 }
 }

@@ -230,11 +230,14 @@
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
-        <input type="email"
-               class="form-control"
-               name="email"
-               placeholder="Masukkan Email"
-               required>
+        <input type="text"
+                class="form-control"
+                name="nim"
+                id="nim"
+                placeholder="NIM / Nomor Induk Siswa"
+                inputmode="numeric"
+                maxlength="20"
+                required>
 
         <div class="password-box">
             <input type="password"
@@ -254,11 +257,11 @@
         </button>
     </form>
 
-    <div class="text-link">
+    <!-- <div class="text-link">
         <a href="{{ route('register') }}">
             Belum punya akun? Daftar di sini
         </a>
-    </div>
+    </div> -->
 
     <a href="{{ url('/') }}" class="back-btn">
         ← Kembali ke Beranda

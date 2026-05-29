@@ -275,7 +275,7 @@ href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.m
                                     </div>
 
                                     <div class="student-email">
-                                        {{ $d->user->email ?? '-' }}
+                                        NIM: {{ $d->user->nim ?? '-' }}
                                     </div>
 
                                 </div>
@@ -313,7 +313,7 @@ href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.m
                         {{-- TANGGAL --}}
                         <td>
 
-                            {{ $d->created_at->format('d M Y H:i') }}
+                            {{ $d->created_at->translatedFormat('d F Y H:i') }}
 
                         </td>
 

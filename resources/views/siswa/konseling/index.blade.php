@@ -6,6 +6,10 @@
 
 <style>
 
+.container{
+    max-width: 900px;
+}
+
 .step{
     display:none;
 }
@@ -15,11 +19,145 @@
 }
 
 .question-item{
-    background:#f9fdf9;
-    padding:14px;
-    border-radius:12px;
-    margin-bottom:14px;
-    border:1px solid #e5e7eb;
+
+    background:#ffffff;
+
+    padding:20px;
+
+    border-radius:20px;
+
+    margin-bottom:18px;
+
+    border:2px solid #e5e7eb;
+
+    transition:.3s;
+}
+
+.question-item:hover{
+
+    border-color:#22c55e;
+
+    transform:translateY(-2px);
+}
+
+.check-wrapper{
+
+    margin-top:15px;
+}
+
+.check-card{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    padding:14px 16px;
+
+    border-radius:14px;
+
+    background:#f8fafc;
+
+    border:2px solid #e5e7eb;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.check-card:hover{
+
+    border-color:#22c55e;
+
+    background:#f0fdf4;
+}
+
+.form-check-input{
+
+    width:26px !important;
+
+    height:26px !important;
+
+    cursor:pointer;
+
+    border:2px solid #16a34a;
+}
+
+.form-check-input:checked{
+
+    background-color:#16a34a;
+
+    border-color:#16a34a;
+}
+
+.check-label{
+
+    display:none;
+
+    font-weight:600;
+
+    color:#166534;
+}
+
+.form-check-input:checked + .check-label{
+
+    display:inline-block;
+
+    animation:fadeIn .25s ease;
+}
+
+.check-card.selected{
+
+    background:#dcfce7;
+
+    border-color:#22c55e;
+}
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+        transform:translateY(4px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@media(max-width:768px){
+
+    .container{
+        max-width:100%;
+    }
+
+    .card-body{
+        padding:22px !important;
+    }
+
+    .question-item{
+        padding:16px;
+    }
+
+    h2{
+        font-size:24px;
+    }
+
+    .check-card{
+        padding:12px;
+    }
+
+    .form-check-input{
+
+        width:24px !important;
+        height:24px !important;
+    }
+
+    .check-label{
+        font-size:14px;
+    }
 }
 
 </style>
@@ -33,6 +171,35 @@
             <h2 class="text-center fw-bold text-success mb-4">
                 Tes Minat & Bakat
             </h2>
+
+            <div class="mb-4">
+
+    <div class="d-flex justify-content-between mb-2">
+
+        <small class="text-muted">
+            Progress Tes
+        </small>
+
+        <small
+            class="text-success fw-semibold"
+            id="progressText"
+        >
+            1/1
+        </small>
+
+    </div>
+
+    <div class="progress">
+
+        <div
+            class="progress-bar bg-success"
+            id="progressBar"
+            style="width:0%"
+        ></div>
+
+    </div>
+
+</div>
 
             @if(session('error'))
 
@@ -61,26 +228,32 @@
                                 {{ $p['pertanyaan'] }}
                             </p>
 
-                            <div class="form-check mb-2 border-0 bg-transparent p-0">
+                            <div class="check-wrapper">
 
-                                <input
-                                    class="form-check-input"
-                                    type="radio"
-                                    name="jawaban_{{ $loop->index }}"
-                                    value="{{ $p['ekstrakurikuler_id'] }}"
-                                    id="yes{{ $loop->index }}"
-                                >
+    <label
+        class="check-card"
+        for="check{{ $loop->index }}"
+    >
 
-                                <label
-                                    class="form-check-label"
-                                    for="yes{{ $loop->index }}"
-                                >
-                                    Ya
-                                </label>
+        <input
+            class="form-check-input"
+            type="checkbox"
+            name="jawaban[]"
+            value="{{ $p['ekstrakurikuler_id'] }}"
+            id="check{{ $loop->index }}"
+        >
 
-                            </div>
+        <span class="check-label">
 
-                            <div class="form-check border-0 bg-transparent p-0">
+    ✓ Saya sesuai dengan pernyataan ini
+
+</span>
+
+    </label>
+
+</div>
+
+                            <!-- <div class="form-check border-0 bg-transparent p-0">
 
                                 <input
                                     class="form-check-input"
@@ -98,7 +271,7 @@
                                     Tidak
                                 </label>
 
-                            </div>
+                            </div> -->
 
                         </div>
 
@@ -192,37 +365,52 @@ document.addEventListener("DOMContentLoaded", function(){
     const submitBtn =
         document.getElementById("submitBtn");
 
+        const progressBar =
+    document.getElementById("progressBar");
+
+const progressText =
+    document.getElementById("progressText");
+
     function showStep(index){
 
-        steps.forEach((step,i)=>{
+    steps.forEach((step,i)=>{
 
-            step.classList.toggle(
-                "active",
-                i === index
-            );
+        step.classList.toggle(
+            "active",
+            i === index
+        );
 
-        });
+    });
 
-        prevBtn.style.display =
-            index === 0
-            ? "none"
-            : "inline-block";
+    prevBtn.style.display =
+        index === 0
+        ? "none"
+        : "inline-block";
 
-        nextBtn.style.display =
-            index === steps.length - 1
-            ? "none"
-            : "inline-block";
+    nextBtn.style.display =
+        index === steps.length - 1
+        ? "none"
+        : "inline-block";
 
-        if(index === steps.length - 1){
+    if(index === steps.length - 1){
 
-            submitBtn.classList.remove("d-none");
+        submitBtn.classList.remove("d-none");
 
-        }else{
+    }else{
 
-            submitBtn.classList.add("d-none");
+        submitBtn.classList.add("d-none");
 
-        }
     }
+
+    const percent =
+        ((index + 1) / steps.length) * 100;
+
+    progressBar.style.width =
+        percent + "%";
+
+    progressText.textContent =
+        `${index + 1}/${steps.length}`;
+}
 
     nextBtn.addEventListener("click", ()=>{
 
@@ -247,6 +435,29 @@ document.addEventListener("DOMContentLoaded", function(){
         }
 
     });
+
+    document
+.querySelectorAll(".form-check-input")
+.forEach(input => {
+
+    input.addEventListener("change", function(){
+
+        const card =
+            this.closest(".check-card");
+
+        if(this.checked){
+
+            card.classList.add("selected");
+
+        }else{
+
+            card.classList.remove("selected");
+
+        }
+
+    });
+
+});
 
     showStep(stepIndex);
 
