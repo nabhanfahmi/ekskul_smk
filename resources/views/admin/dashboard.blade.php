@@ -387,7 +387,7 @@
                 </div>
 
                 <div class="brand-subtitle">
-                    Sistem Pakar Ekstrakurikuler Modern
+                    Sistem Pakar Ekstrakurikuler SMK Syafi'i Akrom
                 </div>
 
             </div>
@@ -396,7 +396,7 @@
 
         <div class="profile-box">
 
-            <div class="notification">
+            <!-- <div class="notification">
                 <i class="bi bi-bell-fill"></i>
             </div>
 
@@ -404,7 +404,7 @@
                 src="https://i.pravatar.cc/150?img=12"
                 class="admin-avatar"
                 alt="Admin"
-            >
+            > -->
 
             {{-- LOGOUT --}}
             <form action="{{ route('logout') }}" method="POST">
@@ -431,7 +431,7 @@
             <div class="col-lg-7">
 
                 <h1 class="hero-title">
-                    Halo, {{ auth()->user()->name }} 👋
+                    Halo, {{ auth()->user()->name }}
                 </h1>
 
                 <p class="hero-text">
@@ -462,7 +462,7 @@
 
             </div>
 
-            <div class="col-lg-5 text-center mt-4 mt-lg-0">
+            <!-- <div class="col-lg-5 text-center mt-4 mt-lg-0">
 
                 <img
                     src="https://cdn-icons-png.flaticon.com/512/4207/4207247.png"
@@ -471,7 +471,7 @@
                     alt="Dashboard"
                 >
 
-            </div>
+            </div> -->
 
         </div>
 

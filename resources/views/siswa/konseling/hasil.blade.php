@@ -2,6 +2,289 @@
 
 @section('siswa-content')
 
+<style>
+
+.container{
+    max-width:1400px;
+}
+
+/* =========================
+   CARD UTAMA
+========================= */
+
+.result-card,
+.card.shadow-lg{
+    border:none;
+    border-radius:32px;
+    overflow:hidden;
+    background:#fff;
+    box-shadow:0 25px 60px rgba(15,23,42,.08);
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.result-header{
+    background:linear-gradient(135deg,#22c55e,#16a34a);
+    padding:35px;
+    color:#fff;
+}
+
+.result-header h2{
+    margin:0;
+}
+
+/* =========================
+   CARD CHART
+========================= */
+
+.chart-box,
+.bg-light{
+    border-radius:24px !important;
+}
+
+.chart-sticky{
+    position:sticky;
+    top:25px;
+}
+
+/* =========================
+   CARD REKOMENDASI
+========================= */
+
+.rekom-card{
+    background:#fff;
+    border-radius:24px;
+    padding:26px;
+    border:1px solid #eef2f7;
+    box-shadow:0 12px 35px rgba(0,0,0,.05);
+    transition:.3s ease;
+}
+
+.rekom-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 20px 45px rgba(0,0,0,.08);
+}
+
+.rekom-img{
+    width:120px;
+    height:120px;
+    object-fit:cover;
+    border-radius:20px;
+    flex-shrink:0;
+}
+
+/* =========================
+   REKOMENDASI CUSTOM
+========================= */
+
+.bg-light.rounded-4.shadow-sm{
+    background:#fff !important;
+    border:1px solid #eef2f7;
+    padding:28px !important;
+    border-radius:24px !important;
+    box-shadow:0 10px 30px rgba(15,23,42,.05) !important;
+    transition:.3s ease;
+}
+
+.bg-light.rounded-4.shadow-sm:hover{
+    transform:translateY(-3px);
+    box-shadow:0 18px 40px rgba(15,23,42,.08) !important;
+}
+
+/* =========================
+   ALTERNATIF
+========================= */
+
+.alternatif-card,
+.card.border-0.shadow-sm{
+    border-radius:20px !important;
+    transition:.3s ease;
+}
+
+.card.border-0.shadow-sm:hover{
+    transform:translateY(-3px);
+}
+
+.card.border-0.shadow-sm .card-body{
+    padding:20px;
+}
+
+/* =========================
+   BADGE
+========================= */
+
+.score-badge,
+.badge{
+    border-radius:999px;
+    padding:8px 14px;
+    font-weight:600;
+    letter-spacing:.2px;
+}
+
+/* =========================
+   TYPOGRAPHY
+========================= */
+
+h2{
+    line-height:1.3;
+}
+
+h4{
+    line-height:1.4;
+}
+
+p{
+    line-height:1.8;
+}
+
+.text-muted{
+    line-height:1.8;
+}
+
+/* =========================
+   CHART AREA
+========================= */
+
+canvas{
+    max-height:400px;
+}
+
+.border-top{
+    margin-top:35px;
+    padding-top:30px !important;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.download-btn{
+    min-width:200px;
+}
+
+.btn-success{
+    font-weight:600;
+}
+
+/* =========================
+   SPACING
+========================= */
+
+.row.g-4{
+    --bs-gutter-x:2rem;
+    --bs-gutter-y:2rem;
+}
+
+.card-body.p-5{
+    padding:2.5rem !important;
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width:991px){
+
+    .chart-sticky{
+        position:relative;
+        top:auto;
+    }
+
+    .card-body.p-5{
+        padding:2rem !important;
+    }
+
+    .row.g-4{
+        --bs-gutter-x:1.5rem;
+        --bs-gutter-y:1.5rem;
+    }
+
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width:768px){
+
+    .container{
+        padding-left:14px;
+        padding-right:14px;
+    }
+
+    .card-body.p-5{
+        padding:1.3rem !important;
+    }
+
+    h2{
+        font-size:1.4rem;
+    }
+
+    h4{
+        font-size:1.1rem;
+    }
+
+    .bg-light.rounded-4.shadow-sm{
+        padding:18px !important;
+    }
+
+    .rekom-img,
+    img.rounded-4.object-fit-cover{
+        width:90px !important;
+        height:90px !important;
+    }
+
+    .download-btn,
+    .btn-success{
+        width:100%;
+    }
+
+    .d-flex.align-items-center.gap-4.flex-wrap{
+        gap:1rem !important;
+    }
+
+    canvas{
+        max-height:300px;
+    }
+
+    .badge{
+        font-size:.75rem;
+    }
+
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width:480px){
+
+    h2{
+        font-size:1.25rem;
+    }
+
+    h4{
+        font-size:1rem;
+    }
+
+    p{
+        font-size:.92rem;
+    }
+
+    .card.border-0.shadow-sm .card-body{
+        padding:16px;
+    }
+
+    .bg-light.rounded-4.shadow-sm{
+        padding:16px !important;
+    }
+
+}
+
+</style>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <div class="container py-5">
@@ -52,7 +335,120 @@
 
     @endif
 
+{{-- REKOMENDASI ALTERNATIF --}}
+@if(isset($rekomendasiLainnya) && count($rekomendasiLainnya))
+
+<div class="mt-2">
+
+    <div class="border-top pt-4">
+
+        <h4 class="fw-bold text-secondary mb-3">
+
+            Rekomendasi Alternatif
+
+        </h4>
+
+        <p class="text-muted small mb-4">
+
+            Selain rekomendasi utama, berikut beberapa
+            ekstrakurikuler lain yang juga memiliki tingkat
+            kecocokan dengan minat dan potensi yang kamu miliki.
+
+        </p>
+
+        <div class="row g-3">
+
+            @foreach($rekomendasiLainnya as $item)
+
+            <div class="col-12">
+
+                <div class="card border-0 shadow-sm">
+
+                    <div class="card-body">
+
+                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+
+                            <div>
+
+                                <h6 class="fw-bold mb-1">
+
+                                    {{ $item['nama'] }}
+
+                                </h6>
+
+                                <div class="d-flex gap-2 flex-wrap">
+
+                                    <span class="badge bg-secondary">
+
+                                        Skor:
+                                        {{ $item['skor'] }}
+
+                                    </span>
+
+                                    <span class="badge bg-dark">
+
+                                        {{ $item['persen'] }}%
+                                        Cocok
+
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <p class="text-muted small mt-3 mb-0">
+
+    @if(($item['persen'] ?? 0) >= 80)
+
+        Sebagai rekomendasi alternatif, ekstrakurikuler ini juga
+        memiliki tingkat kecocokan yang sama dengan 3 rekomendasi utama yaitu
+        {{ $item['persen'] }}%. Kegiatan ini layak
+        dipertimbangkan sebagai pilihan utama selain
+        rekomendasi teratas.
+
+    @elseif(($item['persen'] ?? 0) >= 60)
+
+        Ekstrakurikuler ini memiliki tingkat kecocokan sebesar
+        {{ $item['persen'] }}%. Potensi dan minat yang kamu
+        miliki cukup sesuai sehingga dapat menjadi pilihan
+        alternatif yang baik.
+
+    @elseif(($item['persen'] ?? 0) >= 40)
+
+        Dengan tingkat kecocokan {{ $item['persen'] }}%,
+        ekstrakurikuler ini masih dapat membantu
+        mengembangkan kemampuan dan pengalaman baru.
+
+    @else
+
+        Tingkat kecocokan sebesar {{ $item['persen'] }}%
+        menunjukkan bahwa kegiatan ini bukan pilihan utama,
+        namun tetap dapat dicoba untuk menambah wawasan dan
+        pengalaman di bidang yang berbeda.
+
+    @endif
+
+</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            @endforeach
+
+        </div>
+
+    </div>
+
 </div>
+
+@endif
+
+                    </div>
 
                 </div>
 

@@ -216,9 +216,11 @@
                         <option value="Organisasi" {{ old('kategori', $ekstra->kategori) == 'Organisasi' ? 'selected' : '' }}>
                             Organisasi
                         </option>
-                        <option value="Organisasi" {{ old('kategori', $ekstra->kategori) == 'Organisasi' ? 'selected' : '' }}>
-                            Organisasi
+
+                        <option value="Keterampilan" {{ old('kategori', $ekstra->kategori) == 'Keterampilan' ? 'selected' : '' }}>
+                            Keterampilan
                         </option>
+
                         <option value="Karakter" {{ old('kategori', $ekstra->kategori) == 'Karakter' ? 'selected' : '' }}>
                             Karakter
                         </option>

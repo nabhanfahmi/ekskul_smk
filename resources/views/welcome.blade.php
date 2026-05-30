@@ -1849,10 +1849,15 @@ body::after{
         </div>
 
         {{-- COPYRIGHT --}}
-        <div class="footer-bottom text-center">
+        <!-- <div class="footer-bottom text-center">
 
             © {{ date('Y') }} Sistem Pakar Ekstrakurikuler SMK SA —
             Dibuat dengan 💚 untuk masa depan siswa.
+
+        </div> -->
+        <div class="footer-bottom text-center">
+
+            © {{ date('Y') }} Sistem Pakar Ekstrakurikuler SMK SA
 
         </div>
 

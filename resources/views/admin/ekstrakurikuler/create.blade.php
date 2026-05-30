@@ -239,6 +239,11 @@
                             Organisasi
                         </option>
 
+                        <option value="Keterampilan"
+                            {{ old('kategori') == 'Keterampilan' ? 'selected' : '' }}>
+                            Keterampilan
+                        </option>
+
                         <option value="Karakter"
                             {{ old('kategori') == 'Karakter' ? 'selected' : '' }}>
                             Karakter
