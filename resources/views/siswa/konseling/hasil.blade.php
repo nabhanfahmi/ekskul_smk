@@ -358,7 +358,7 @@ canvas{
 
         <div class="row g-3">
 
-            @foreach($rekomendasiLainnya as $item)
+            @foreach(collect($rekomendasiLainnya)->take(2) as $item)
 
             <div class="col-12">
 
@@ -385,12 +385,23 @@ canvas{
 
                                     </span>
 
-                                    <span class="badge bg-dark">
+                                    @php
+    $persen = $item['persen'] ?? 0;
 
-                                        {{ $item['persen'] }}%
-                                        Cocok
+    if ($persen >= 80) {
+        $kategori = 'Sangat Tinggi';
+    } elseif ($persen >= 60) {
+        $kategori = 'Cukup Baik';
+    } elseif ($persen >= 40) {
+        $kategori = 'Sedang';
+    } else {
+        $kategori = 'Rendah';
+    }
+@endphp
 
-                                    </span>
+<span class="badge bg-dark">
+    {{ $persen }}% - {{ $kategori }}
+</span>
 
                                 </div>
 
@@ -491,53 +502,44 @@ canvas{
 
     </span>
 
-    <span class="badge bg-dark">
+    @php
+    $persen = $item['persen'] ?? 0;
 
-        {{ $item['persen'] }}%
-        Cocok
+    if ($persen >= 80) {
+        $kategori = 'Sangat Tinggi';
+    } elseif ($persen >= 60) {
+        $kategori = 'Cukup Baik';
+    } elseif ($persen >= 40) {
+        $kategori = 'Sedang';
+    } else {
+        $kategori = 'Rendah';
+    }
+@endphp
 
-    </span>
+<span class="badge bg-dark">
+    {{ $persen }}%
+</span>
 
 </div>
 
-                                        <p class="text-muted mb-0">
+                                        <p class="text-muted small mt-3 mb-0">
+
+    {{ $item['deskripsi_rekomendasi'] }}
+
+    <br><br>
+
+    Tingkat kecocokan:
+    <strong>{{ $item['persen'] }}%</strong>
 
     @if(($item['persen'] ?? 0) >= 80)
-
-                    Ekstrakurikuler ini sangat direkomendasikan karena
-                    tingkat kecocokan mencapai
-                    {{ $item['persen'] }}%.
-                    Hasil tes menunjukkan bahwa minat, potensi,
-                    dan karakteristik yang kamu miliki sangat sesuai
-                    dengan kegiatan ekstrakurikuler ini sehingga dapat
-                    menjadi pilihan utama untuk dikembangkan.
-
-                @elseif(($item['persen'] ?? 0) >= 60)
-
-                    Ekstrakurikuler ini direkomendasikan karena memiliki
-                    tingkat kecocokan sebesar
-                    {{ $item['persen'] }}%.
-                    Kamu menunjukkan ketertarikan dan potensi yang cukup
-                    baik pada bidang ini sehingga layak dipertimbangkan
-                    sebagai salah satu pilihan utama.
-
-                @elseif(($item['persen'] ?? 0) >= 40)
-
-                    Ekstrakurikuler ini memiliki tingkat kecocokan
-                    sebesar {{ $item['persen'] }}%.
-                    Kegiatan ini masih cukup sesuai dan dapat membantu
-                    mengembangkan kemampuan, pengalaman, serta wawasan
-                    baru yang bermanfaat bagi diri kamu.
-
-                @else
-
-                    Tingkat kecocokan pada ekstrakurikuler ini sebesar
-                    {{ $item['persen'] }}%.
-                    Meskipun bukan rekomendasi utama, kegiatan ini tetap
-                    dapat dicoba untuk memperluas pengalaman, relasi,
-                    dan keterampilan di bidang yang berbeda.
-
-                @endif
+        (Sangat tinggi)
+    @elseif(($item['persen'] ?? 0) >= 60)
+        (Cukup baik)
+    @elseif(($item['persen'] ?? 0) >= 40)
+        (Sedang)
+    @else
+        (Rendah)
+    @endif
 
 </p>
 

@@ -172,6 +172,10 @@
                 Tes Minat & Bakat
             </h2>
 
+            <p class="text-center text-muted mb-4">
+                Ceklist sesuai dengan minat yang kamu miliki!.
+            </p>
+
             <div class="mb-4">
 
     <div class="d-flex justify-content-between mb-2">
@@ -307,7 +311,7 @@
                     class="btn btn-success w-100 mt-4 d-none"
                     id="submitBtn"
                 >
-                    Simpan Hasil Tes
+                    Simpan Hasil Jawaban
                 </button>
 
             </form>

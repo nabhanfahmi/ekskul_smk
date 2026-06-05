@@ -220,50 +220,44 @@ body{
                     Skor: {{ $item['skor'] ?? 0 }}
                 </span>
 
-                <span class="badge badge-dark">
-                    {{ $item['persen'] ?? 0 }}% Cocok
-                </span>
+                @php
+    $persen = $item['persen'] ?? 0;
 
-                <div class="desc">
+    if ($persen >= 80) {
+        $kategori = 'Sangat Tinggi';
+    } elseif ($persen >= 60) {
+        $kategori = 'Cukup Baik';
+    } elseif ($persen >= 40) {
+        $kategori = 'Sedang';
+    } else {
+        $kategori = 'Rendah';
+    }
+@endphp
 
-                    @if(($item['persen'] ?? 0) >= 80)
+<span class="badge badge-dark">
+    {{ $persen }}% - {{ $kategori }}
+</span>
 
-                        Ekstrakurikuler ini sangat direkomendasikan karena
-                        tingkat kecocokan mencapai
-                        {{ $item['persen'] }}%.
-                        Hasil tes menunjukkan bahwa minat, potensi,
-                        dan karakteristik yang kamu miliki sangat sesuai
-                        dengan kegiatan ekstrakurikuler ini sehingga dapat
-                        menjadi pilihan utama untuk dikembangkan.
+                <p class="text-muted small mt-3 mb-0">
 
-                    @elseif(($item['persen'] ?? 0) >= 60)
+    {{ $item['deskripsi_rekomendasi'] }}
 
-                        Ekstrakurikuler ini direkomendasikan karena memiliki
-                        tingkat kecocokan sebesar
-                        {{ $item['persen'] }}%.
-                        Kamu menunjukkan ketertarikan dan potensi yang cukup
-                        baik pada bidang ini sehingga layak dipertimbangkan
-                        sebagai salah satu pilihan utama.
+    <br><br>
 
-                    @elseif(($item['persen'] ?? 0) >= 40)
+    Tingkat kecocokan:
+    <strong>{{ $item['persen'] }}%</strong>
 
-                        Ekstrakurikuler ini memiliki tingkat kecocokan
-                        sebesar {{ $item['persen'] }}%.
-                        Kegiatan ini masih cukup sesuai dan dapat membantu
-                        mengembangkan kemampuan, pengalaman, serta wawasan
-                        baru yang bermanfaat bagi diri kamu.
+    @if(($item['persen'] ?? 0) >= 80)
+        (Sangat tinggi)
+    @elseif(($item['persen'] ?? 0) >= 60)
+        (Cukup baik)
+    @elseif(($item['persen'] ?? 0) >= 40)
+        (Sedang)
+    @else
+        (Rendah)
+    @endif
 
-                    @else
-
-                        Tingkat kecocokan pada ekstrakurikuler ini sebesar
-                        {{ $item['persen'] }}%.
-                        Meskipun bukan rekomendasi utama, kegiatan ini tetap
-                        dapat dicoba untuk memperluas pengalaman, relasi,
-                        dan keterampilan di bidang yang berbeda.
-
-                    @endif
-
-                </div>
+</p>
 
             </td>
 
@@ -274,6 +268,81 @@ body{
 </div>
 
 @endforeach
+
+@if(isset($rekomendasiLainnya) && count($rekomendasiLainnya))
+
+<div style="margin-top:30px;">
+
+    <h3 style="
+        color:#16a34a;
+        margin-bottom:15px;
+        border-bottom:1px solid #e5e7eb;
+        padding-bottom:8px;
+    ">
+        Rekomendasi Alternatif
+    </h3>
+
+    @foreach(collect($rekomendasiLainnya)->take(2) as $item)
+
+    <div class="card">
+
+        <div class="nama" style="font-size:16px;">
+            {{ $item['nama'] }}
+        </div>
+
+        <span class="badge">
+            Skor: {{ $item['skor'] ?? 0 }}
+        </span>
+
+        @php
+    $persen = $item['persen'] ?? 0;
+
+    if ($persen >= 80) {
+        $kategori = 'Sangat Tinggi';
+    } elseif ($persen >= 60) {
+        $kategori = 'Cukup Baik';
+    } elseif ($persen >= 40) {
+        $kategori = 'Sedang';
+    } else {
+        $kategori = 'Rendah';
+    }
+@endphp
+
+<span class="badge badge-dark">
+    {{ $persen }}% - {{ $kategori }}
+</span>
+
+        <div class="desc">
+
+            @if(($item['persen'] ?? 0) >= 80)
+
+                Ekstrakurikuler ini juga memiliki tingkat
+                kecocokan yang sangat tinggi dan dapat menjadi
+                pilihan alternatif yang layak dipertimbangkan.
+
+            @elseif(($item['persen'] ?? 0) >= 60)
+
+                Ekstrakurikuler ini cukup sesuai dengan minat
+                dan potensi yang dimiliki sehingga dapat menjadi
+                pilihan alternatif yang baik.
+
+            @else
+
+                Ekstrakurikuler ini dapat dijadikan pilihan
+                tambahan untuk mengembangkan pengalaman dan
+                keterampilan di bidang yang berbeda.
+
+            @endif
+
+        </div>
+
+    </div>
+
+    @endforeach
+
+</div>
+
+@endif
 
 <div class="footer">
 

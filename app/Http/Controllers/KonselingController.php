@@ -93,6 +93,7 @@ class KonselingController extends Controller
                     'id' => $ekstra->id,
                     'nama' => $ekstra->nama,
                     'deskripsi' => $ekstra->deskripsi,
+                    'deskripsi_rekomendasi' => $ekstra->deskripsi_rekomendasi,
                     'gambar' => $ekstra->gambar,
                     'skor' => $data['skor'],
                     'persen' => $data['persen']
@@ -122,12 +123,18 @@ class KonselingController extends Controller
                     'id' => $ekstra->id,
                     'nama' => $ekstra->nama,
                     'deskripsi' => $ekstra->deskripsi,
+                    'deskripsi_rekomendasi' => $ekstra->deskripsi_rekomendasi,
                     'gambar' => $ekstra->gambar,
                     'skor' => $data['skor'],
                     'persen' => $data['persen']
                 ];
             }
         }
+
+        $rekomendasiLainnya = collect($rekomendasiLainnya)
+    ->take(2)
+    ->values()
+    ->toArray();
 
         /*
         |--------------------------------------------------------------------------

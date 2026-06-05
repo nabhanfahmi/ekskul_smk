@@ -35,12 +35,17 @@
 
     transition: .35s;
 
-    height: 100%;
+    /* height: 100%; */
 
     position: relative;
 
     box-shadow:
         0 0 25px rgba(34,197,94,.05);
+}
+
+.glass-card a{
+    display: block;
+    overflow: hidden;
 }
 
 .glass-card::before{
@@ -74,21 +79,27 @@
 
 .ekstra-image{
     width: 100%;
-    height: 230px;
+    /* height: 230px; */
+    height: 140px;
 
     object-fit: cover;
 
     transition: .4s;
+
+    margin-bottom: 10px;
+
+    cursor: pointer;
 }
 
 .glass-card:hover .ekstra-image{
-    transform: scale(1.04);
+    transform: scale(1.06);
 }
 
 /* CONTENT */
 
 .ekstra-content{
-    padding: 24px;
+    /* padding: 24px; */
+    padding: 5px;
 }
 
 /* BADGE */
@@ -98,7 +109,7 @@
     align-items: center;
     gap: 8px;
 
-    padding: 9px 16px;
+    padding: 6px 13px;
 
     border-radius: 999px;
 
@@ -108,10 +119,10 @@
 
     color: #86efac;
 
-    font-size: 13px;
+    font-size: 10px;
     font-weight: 600;
 
-    margin-bottom: 18px;
+    margin-bottom: 20px;
 }
 
 /* TITLE */
@@ -119,10 +130,10 @@
 .ekstra-title{
     color: white;
 
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 700;
 
-    margin-bottom: 14px;
+    margin-bottom: 10px;
 
     line-height: 1.3;
 }
@@ -134,11 +145,19 @@
 
     line-height: 1.8;
 
+    font-size: 12px;
+
     margin-bottom: 22px;
 
-    min-height: 78px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: auto;
 
-    font-size: 14px;
+    /* min-height: 78px;
+
+    font-size: 14px; */
 }
 
 /* INFO */
@@ -150,9 +169,9 @@
 
     color: rgba(255,255,255,.78);
 
-    margin-bottom: 14px;
+    margin-bottom: 10px;
 
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .info-item i{
@@ -169,7 +188,7 @@
 
     color: #4ade80;
 
-    font-size: 15px;
+    font-size: 12px;
 
     flex-shrink: 0;
 }
@@ -183,9 +202,9 @@
 
     border-radius: 18px;
 
-    padding: 15px;
+    padding: 9px;
 
-    margin-top: 18px;
+    margin-top: 9px;
 
     background:
         linear-gradient(
@@ -330,21 +349,24 @@
 
             <div class="col-md-6 col-xl-4">
 
+                <a href="{{ route('siswa.ekstrakurikuler.show', $d->id) }}"
+                class= "text-decoration-none">
                 <div class="glass-card">
 
-                    @if($d->gambar)
+                        @if($d->gambar)
 
-                        <img
-                            src="{{ asset('storage/' . $d->gambar) }}"
-                            class="ekstra-image">
+                            <img
+                                src="{{ asset('storage/' . $d->gambar) }}"
+                                class="ekstra-image">
 
-                    @else
+                        @else
 
-                        <img
-                            src="https://via.placeholder.com/600x400"
-                            class="ekstra-image">
+                            <img
+                                src="https://via.placeholder.com/600x400"
+                                class="ekstra-image">
 
-                    @endif
+                        @endif
+                    
 
                     <div class="ekstra-content">
 
@@ -357,7 +379,7 @@
                         </h3>
 
                         <div class="ekstra-desc">
-                            {{ Str::limit($d->deskripsi, 120) }}
+                            {{ Str::limit($d->deskripsi, 80) }}
                         </div>
 
                         <div class="info-item">
@@ -375,18 +397,19 @@
                             <span>{{ $d->lokasi ?? 'Lokasi belum tersedia' }}</span>
                         </div>
 
-                        <a
+                        <!-- <a
                             href="{{ route('siswa.ekstrakurikuler.show', $d->id) }}"
                             class="btn-detail">
 
                             <i class="bi bi-eye-fill"></i>
                             Lihat Detail
 
-                        </a>
+                        </a> -->
 
                     </div>
 
                 </div>
+                </a>
 
             </div>
 

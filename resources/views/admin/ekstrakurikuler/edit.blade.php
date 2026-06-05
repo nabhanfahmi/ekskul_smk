@@ -233,7 +233,7 @@
 
             <div class="mb-4">
 
-                <label>Deskripsi</label>
+                <label>Deskripsi Ekstrakurikuler</label>
 
                 <textarea
                     name="deskripsi"
@@ -242,6 +242,18 @@
                     placeholder="Masukkan deskripsi ekstrakurikuler">{{ old('deskripsi', $ekstra->deskripsi) }}</textarea>
 
             </div>
+
+            <div class="mb-4">
+
+    <label>Deskripsi Hasil Rekomendasi</label>
+
+    <textarea
+        name="deskripsi_rekomendasi"
+        rows="6"
+        class="form-control"
+        placeholder="Masukkan deskripsi yang akan tampil pada hasil rekomendasi siswa">{{ old('deskripsi_rekomendasi', $ekstra->deskripsi_rekomendasi) }}</textarea>
+
+</div>
 
             <div class="row">
 
@@ -398,7 +410,7 @@
             {{-- PERTANYAAN --}}
             <div class="mb-4 mt-3">
 
-                <label>Pertanyaan Eksisting</label>
+                <label>Isi Pernyataan</label>
 
                 @forelse($ekstra->pertanyaan as $p)
 
@@ -411,7 +423,7 @@
                 @empty
 
                     <div class="text-light opacity-75">
-                        Belum ada pertanyaan
+                        Belum ada pernyataan
                     </div>
 
                 @endforelse
@@ -420,7 +432,7 @@
 
             <div class="mb-4">
 
-                <label>Tambah Pertanyaan Baru</label>
+                <label>Tambah Pernyataan Baru</label>
 
                 <div id="wrapper-pertanyaan">
 
@@ -428,7 +440,7 @@
                         type="text"
                         name="pertanyaan_baru[]"
                         class="form-control mb-2"
-                        placeholder="Tambah pertanyaan baru">
+                        placeholder="Isi pernyataan baru di sini!">
 
                 </div>
 
@@ -438,7 +450,7 @@
                     class="btn btn-outline-light btn-sm mt-2">
 
                     <i class="bi bi-plus-circle me-1"></i>
-                    Tambah Pertanyaan
+                    Tambah Pernyataan
 
                 </button>
 

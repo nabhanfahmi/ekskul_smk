@@ -12,6 +12,7 @@ class Ekstrakurikuler extends Model
         'nama',
         'kategori',
         'deskripsi',
+        'deskripsi_rekomendasi',
         'gambar',
         'jadwal',
         'pembina',

@@ -264,7 +264,7 @@
             {{-- DESKRIPSI --}}
             <div class="mb-4">
 
-                <label>Deskripsi</label>
+                <label>Deskripsi Ekstrakurikuler</label>
 
                 <textarea
                     name="deskripsi"
@@ -273,6 +273,18 @@
                     placeholder="Masukkan deskripsi ekstrakurikuler">{{ old('deskripsi') }}</textarea>
 
             </div>
+
+<div class="mb-4">
+
+    <label>Deskripsi Hasil Rekomendasi</label>
+
+    <textarea
+        name="deskripsi_rekomendasi"
+        rows="6"
+        class="form-control"
+        placeholder="Masukkan deskripsi yang akan tampil pada hasil rekomendasi siswa">{{ old('deskripsi_rekomendasi') }}</textarea>
+
+</div>
 
             <div class="row">
 
@@ -368,7 +380,7 @@
             {{-- PERTANYAAN --}}
 <div class="mb-4 mt-3">
 
-    <label>Pertanyaan Minat & Bakat</label>
+    <label>Pernyataan Minat & Bakat</label>
 
     <div id="wrapper-pertanyaan">
 
@@ -384,7 +396,7 @@
     <button type="button" id="addPertanyaan" class="btn btn-outline-light btn-sm mt-2">
 
         <i class="bi bi-plus-circle me-1"></i>
-        Tambah Pertanyaan
+        Tambah Pernyataan
 
     </button>
 
@@ -423,7 +435,7 @@ document.getElementById('addPertanyaan').addEventListener('click', function () {
             type="text"
             name="pertanyaan[]"
             class="form-control mb-2"
-            placeholder="Tambah pertanyaan baru"
+            placeholder="Tambah pernyataan baru"
         >
     `;
 

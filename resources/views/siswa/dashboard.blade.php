@@ -508,6 +508,8 @@ body::after{
 
     transition: .3s ease;
 
+    font-size: 13px;
+
     font-weight: 500;
 }
 
@@ -883,7 +885,7 @@ body::after{
            class="{{ request()->routeIs('siswa.ekstrakurikuler.*') ? 'active' : '' }}">
 
             <i class="bi bi-trophy-fill"></i>
-            <span>Ekstrakurikuler</span>
+            <span>Informasi Ekstrakurikuler</span>
 
         </a>
 
