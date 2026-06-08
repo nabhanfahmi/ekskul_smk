@@ -21,33 +21,48 @@ class HasilKonselingController extends Controller
                 'error',
                 'Hasil konseling belum tersedia'
             );
-
         }
 
-        $rekomendasi = json_decode(
+        $data = json_decode(
             $hasil->hasil,
             true
         );
 
-        if (!is_array($rekomendasi)) {
-
-            $rekomendasi = [];
-
+        if (!is_array($data)) {
+            $data = [];
         }
+
+        $rekomendasiUtama =
+            $data['utama'][0] ?? null;
+
+        $rekomendasiAlternatif =
+            $data['alternatif'][0] ?? null;
 
         $skor = [];
 
-        foreach ($rekomendasi as $item) {
+        foreach ($data['utama'] ?? [] as $item) {
 
-            $skor[$item['nama']] =
-                $item['skor'];
+            if (isset($item['nama'], $item['skor'])) {
 
+                $skor[$item['nama']] =
+                    $item['skor'];
+            }
+        }
+
+        foreach ($data['alternatif'] ?? [] as $item) {
+
+            if (isset($item['nama'], $item['skor'])) {
+
+                $skor[$item['nama']] =
+                    $item['skor'];
+            }
         }
 
         $pdf = Pdf::loadView(
             'siswa.hasil_pdf',
             compact(
-                'rekomendasi',
+                'rekomendasiUtama',
+                'rekomendasiAlternatif',
                 'skor'
             )
         );
@@ -58,24 +73,59 @@ class HasilKonselingController extends Controller
     }
 
     public function downloadPdfDetail($id)
-{
-    $hasil = HasilKonseling::where('user_id', auth()->id())
-                ->findOrFail($id);
+    {
+        $hasil = HasilKonseling::where(
+            'user_id',
+            auth()->id()
+        )->findOrFail($id);
 
-    $rekomendasi = json_decode($hasil->hasil, true);
+        $data = json_decode(
+            $hasil->hasil,
+            true
+        );
 
-    if (!is_array($rekomendasi)) {
-        $rekomendasi = [];
+        if (!is_array($data)) {
+            $data = [];
+        }
+
+        $rekomendasiUtama =
+            $data['utama'][0] ?? null;
+
+        $rekomendasiAlternatif =
+            $data['alternatif'][0] ?? null;
+
+        $skor = [];
+
+        foreach ($data['utama'] ?? [] as $item) {
+
+            if (isset($item['nama'], $item['skor'])) {
+
+                $skor[$item['nama']] =
+                    $item['skor'];
+            }
+        }
+
+        foreach ($data['alternatif'] ?? [] as $item) {
+
+            if (isset($item['nama'], $item['skor'])) {
+
+                $skor[$item['nama']] =
+                    $item['skor'];
+            }
+        }
+
+        $pdf = Pdf::loadView(
+            'siswa.hasil_pdf',
+            compact(
+                'hasil',
+                'rekomendasiUtama',
+                'rekomendasiAlternatif',
+                'skor'
+            )
+        );
+
+        return $pdf->download(
+            'hasil-konseling-' . $hasil->id . '.pdf'
+        );
     }
-
-    $pdf = Pdf::loadView(
-        'siswa.hasil_pdf',
-        compact('hasil', 'rekomendasi')
-    );
-
-    return $pdf->download(
-        'hasil-konseling-'.$hasil->id.'.pdf'
-    );
-}
-
 }

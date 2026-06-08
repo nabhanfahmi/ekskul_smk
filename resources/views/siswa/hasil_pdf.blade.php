@@ -170,8 +170,12 @@ body{
 </div>
 
 <div class="content">
+    @php
+$rekomendasiUtama = $rekomendasiUtama ?? null;
+$rekomendasiAlternatif = $rekomendasiAlternatif ?? null;
+@endphp
 
-@if(count($rekomendasi))
+@if(!empty($rekomendasiUtama) || !empty($rekomendasiAlternatif))
 
 <div class="summary">
 
@@ -188,12 +192,12 @@ body{
 
 @endif
 
-@foreach($rekomendasi as $index => $item)
+@if($rekomendasiUtama)
 
 <div class="card">
 
     <div class="rank">
-        Rekomendasi #{{ $index + 1 }}
+        Rekomendasi Utama
     </div>
 
     <table class="table">
@@ -202,9 +206,9 @@ body{
 
             <td class="image-col">
 
-                @if(!empty($item['gambar']))
+                @if(!empty($rekomendasiUtama['gambar']))
                     <img
-                        src="{{ public_path('storage/'.$item['gambar']) }}"
+                        src="{{ public_path('storage/'.$rekomendasiUtama['gambar']) }}"
                         class="image">
                 @endif
 
@@ -213,51 +217,51 @@ body{
             <td class="info-col">
 
                 <div class="nama">
-                    {{ $item['nama'] }}
+                    {{ $rekomendasiUtama['nama'] }}
                 </div>
 
                 <span class="badge">
-                    Skor: {{ $item['skor'] ?? 0 }}
+                    Skor: {{ $rekomendasiUtama['skor'] ?? 0 }}
                 </span>
 
                 @php
-    $persen = $item['persen'] ?? 0;
+                    $persen = $rekomendasiUtama['persen'] ?? 0;
 
-    if ($persen >= 80) {
-        $kategori = 'Sangat Tinggi';
-    } elseif ($persen >= 60) {
-        $kategori = 'Cukup Baik';
-    } elseif ($persen >= 40) {
-        $kategori = 'Sedang';
-    } else {
-        $kategori = 'Rendah';
-    }
-@endphp
+                    if ($persen >= 80) {
+                        $kategori = 'Sangat Tinggi';
+                    } elseif ($persen >= 60) {
+                        $kategori = 'Cukup Baik';
+                    } elseif ($persen >= 40) {
+                        $kategori = 'Sedang';
+                    } else {
+                        $kategori = 'Rendah';
+                    }
+                @endphp
 
-<span class="badge badge-dark">
-    {{ $persen }}% - {{ $kategori }}
-</span>
+                <span class="badge badge-dark">
+                    {{ $persen }}% - {{ $kategori }}
+                </span>
 
-                <p class="text-muted small mt-3 mb-0">
+                <div class="desc">
 
-    {{ $item['deskripsi_rekomendasi'] }}
+                    {{ $rekomendasiUtama['deskripsi_rekomendasi'] }}
 
-    <br><br>
+                    <br><br>
 
-    Tingkat kecocokan:
-    <strong>{{ $item['persen'] }}%</strong>
+                    Tingkat kecocokan:
+                    <strong>{{ $persen }}%</strong>
 
-    @if(($item['persen'] ?? 0) >= 80)
-        (Sangat tinggi)
-    @elseif(($item['persen'] ?? 0) >= 60)
-        (Cukup baik)
-    @elseif(($item['persen'] ?? 0) >= 40)
-        (Sedang)
-    @else
-        (Rendah)
-    @endif
+                    @if($persen >= 80)
+                        (Sangat Tinggi)
+                    @elseif($persen >= 60)
+                        (Cukup Baik)
+                    @elseif($persen >= 40)
+                        (Sedang)
+                    @else
+                        (Rendah)
+                    @endif
 
-</p>
+                </div>
 
             </td>
 
@@ -267,82 +271,89 @@ body{
 
 </div>
 
-@endforeach
+@endif
 
-@if(isset($rekomendasiLainnya) && count($rekomendasiLainnya))
+@if($rekomendasiAlternatif)
 
-<div style="margin-top:30px;">
+<div class="card">
 
-    <h3 style="
-        color:#16a34a;
-        margin-bottom:15px;
-        border-bottom:1px solid #e5e7eb;
-        padding-bottom:8px;
-    ">
-        Rekomendasi Alternatif
-    </h3>
+<div class="rank">
+    Rekomendasi Alternatif
+</div>
 
-    @foreach(collect($rekomendasiLainnya)->take(2) as $item)
+<table class="table">
 
-    <div class="card">
+    <tr>
 
-        <div class="nama" style="font-size:16px;">
-            {{ $item['nama'] }}
-        </div>
+        <td class="image-col">
 
-        <span class="badge">
-            Skor: {{ $item['skor'] ?? 0 }}
-        </span>
-
-        @php
-    $persen = $item['persen'] ?? 0;
-
-    if ($persen >= 80) {
-        $kategori = 'Sangat Tinggi';
-    } elseif ($persen >= 60) {
-        $kategori = 'Cukup Baik';
-    } elseif ($persen >= 40) {
-        $kategori = 'Sedang';
-    } else {
-        $kategori = 'Rendah';
-    }
-@endphp
-
-<span class="badge badge-dark">
-    {{ $persen }}% - {{ $kategori }}
-</span>
-
-        <div class="desc">
-
-            @if(($item['persen'] ?? 0) >= 80)
-
-                Ekstrakurikuler ini juga memiliki tingkat
-                kecocokan yang sangat tinggi dan dapat menjadi
-                pilihan alternatif yang layak dipertimbangkan.
-
-            @elseif(($item['persen'] ?? 0) >= 60)
-
-                Ekstrakurikuler ini cukup sesuai dengan minat
-                dan potensi yang dimiliki sehingga dapat menjadi
-                pilihan alternatif yang baik.
-
-            @else
-
-                Ekstrakurikuler ini dapat dijadikan pilihan
-                tambahan untuk mengembangkan pengalaman dan
-                keterampilan di bidang yang berbeda.
-
+            @if(!empty($rekomendasiAlternatif['gambar']))
+                <img
+                    src="{{ public_path('storage/'.$rekomendasiAlternatif['gambar']) }}"
+                    class="image">
             @endif
 
-        </div>
+        </td>
 
-    </div>
+        <td class="info-col">
 
-    @endforeach
+            <div class="nama">
+                {{ $rekomendasiAlternatif['nama'] }}
+            </div>
+
+            <span class="badge">
+                Skor: {{ $rekomendasiAlternatif['skor'] ?? 0 }}
+            </span>
+
+            @php
+                $persen = $rekomendasiAlternatif['persen'] ?? 0;
+
+                if ($persen >= 80) {
+                    $kategori = 'Sangat Tinggi';
+                } elseif ($persen >= 60) {
+                    $kategori = 'Cukup Baik';
+                } elseif ($persen >= 40) {
+                    $kategori = 'Sedang';
+                } else {
+                    $kategori = 'Rendah';
+                }
+            @endphp
+
+            <span class="badge badge-dark">
+                {{ $persen }}% - {{ $kategori }}
+            </span>
+
+            <div class="desc">
+
+                {{ $rekomendasiAlternatif['deskripsi_rekomendasi'] ?? '' }}
+
+                <br><br>
+
+                Tingkat kecocokan:
+                <strong>{{ $persen }}%</strong>
+
+                @if($persen >= 80)
+                    (Sangat Tinggi)
+                @elseif($persen >= 60)
+                    (Cukup Baik)
+                @elseif($persen >= 40)
+                    (Sedang)
+                @else
+                    (Rendah)
+                @endif
+
+            </div>
+
+        </td>
+
+    </tr>
+
+</table>
 
 </div>
 
 @endif
+
 
 <div class="footer">
 

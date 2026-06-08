@@ -159,7 +159,10 @@ class KonselingController extends Controller
             'ekstrakurikuler_id' =>
                 $rekomendasi[0]['id'] ?? null,
 
-            'hasil' => json_encode($semuaRekomendasi)
+            'hasil' => json_encode([
+    'utama' => $rekomendasi,
+    'alternatif' => $rekomendasiLainnya,
+])
         ]);
 
         /*

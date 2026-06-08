@@ -287,6 +287,26 @@ canvas{
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+@php
+    $rekomendasiUtama = collect($rekomendasi)->first();
+
+    $rekomendasiAlternatif = null;
+
+    if(isset($rekomendasiLainnya) && count($rekomendasiLainnya)){
+        $rekomendasiAlternatif = collect($rekomendasiLainnya)->first();
+    }
+
+    $chartSkor = [];
+
+    if($rekomendasiUtama){
+        $chartSkor[$rekomendasiUtama['nama']] = $rekomendasiUtama['persen'];
+    }
+
+    if($rekomendasiAlternatif){
+        $chartSkor[$rekomendasiAlternatif['nama']] = $rekomendasiAlternatif['persen'];
+    }
+@endphp
+
 <div class="container py-5">
 
     <div class="card border-0 shadow-lg rounded-4">
@@ -358,90 +378,46 @@ canvas{
 
         <div class="row g-3">
 
-            @foreach(collect($rekomendasiLainnya)->take(2) as $item)
+            @if($rekomendasiAlternatif)
 
-            <div class="col-12">
+<div class="col-12">
 
-                <div class="card border-0 shadow-sm">
+    <div class="card border-0 shadow-sm">
 
-                    <div class="card-body">
+        <div class="card-body">
 
-                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
 
-                            <div>
+                <div>
 
-                                <h6 class="fw-bold mb-1">
+                    <h6 class="fw-bold mb-1">
+                        {{ $rekomendasiAlternatif['nama'] }}
+                    </h6>
 
-                                    {{ $item['nama'] }}
+                    <div class="d-flex gap-2 flex-wrap">
 
-                                </h6>
+                        <span class="badge bg-secondary">
+                            Skor:
+                            {{ $rekomendasiAlternatif['skor'] }}
+                        </span>
 
-                                <div class="d-flex gap-2 flex-wrap">
+                        @php
+                            $persen = $rekomendasiAlternatif['persen'] ?? 0;
 
-                                    <span class="badge bg-secondary">
+                            if ($persen >= 80) {
+                                $kategori = 'Sangat Tinggi';
+                            } elseif ($persen >= 60) {
+                                $kategori = 'Cukup Baik';
+                            } elseif ($persen >= 40) {
+                                $kategori = 'Sedang';
+                            } else {
+                                $kategori = 'Rendah';
+                            }
+                        @endphp
 
-                                        Skor:
-                                        {{ $item['skor'] }}
-
-                                    </span>
-
-                                    @php
-    $persen = $item['persen'] ?? 0;
-
-    if ($persen >= 80) {
-        $kategori = 'Sangat Tinggi';
-    } elseif ($persen >= 60) {
-        $kategori = 'Cukup Baik';
-    } elseif ($persen >= 40) {
-        $kategori = 'Sedang';
-    } else {
-        $kategori = 'Rendah';
-    }
-@endphp
-
-<span class="badge bg-dark">
-    {{ $persen }}% - {{ $kategori }}
-</span>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <p class="text-muted small mt-3 mb-0">
-
-    @if(($item['persen'] ?? 0) >= 80)
-
-        Sebagai rekomendasi alternatif, ekstrakurikuler ini juga
-        memiliki tingkat kecocokan yang sama dengan 3 rekomendasi utama yaitu
-        {{ $item['persen'] }}%. Kegiatan ini layak
-        dipertimbangkan sebagai pilihan utama selain
-        rekomendasi teratas.
-
-    @elseif(($item['persen'] ?? 0) >= 60)
-
-        Ekstrakurikuler ini memiliki tingkat kecocokan sebesar
-        {{ $item['persen'] }}%. Potensi dan minat yang kamu
-        miliki cukup sesuai sehingga dapat menjadi pilihan
-        alternatif yang baik.
-
-    @elseif(($item['persen'] ?? 0) >= 40)
-
-        Dengan tingkat kecocokan {{ $item['persen'] }}%,
-        ekstrakurikuler ini masih dapat membantu
-        mengembangkan kemampuan dan pengalaman baru.
-
-    @else
-
-        Tingkat kecocokan sebesar {{ $item['persen'] }}%
-        menunjukkan bahwa kegiatan ini bukan pilihan utama,
-        namun tetap dapat dicoba untuk menambah wawasan dan
-        pengalaman di bidang yang berbeda.
-
-    @endif
-
-</p>
+                        <span class="badge bg-dark">
+                            {{ $persen }}% - {{ $kategori }}
+                        </span>
 
                     </div>
 
@@ -449,7 +425,35 @@ canvas{
 
             </div>
 
-            @endforeach
+            <p class="text-muted small mt-3 mb-0">
+
+                @if($persen >= 80)
+
+                    Sebagai rekomendasi alternatif, ekstrakurikuler ini memiliki tingkat kecocokan yang sangat tinggi yaitu {{ $persen }}%.
+
+                @elseif($persen >= 60)
+
+                    Ekstrakurikuler ini memiliki tingkat kecocokan sebesar {{ $persen }}% dan dapat menjadi pilihan alternatif yang baik.
+
+                @elseif($persen >= 40)
+
+                    Dengan tingkat kecocokan {{ $persen }}%, ekstrakurikuler ini masih dapat membantu mengembangkan kemampuan dan pengalaman baru.
+
+                @else
+
+                    Tingkat kecocokan sebesar {{ $persen }}% menunjukkan bahwa kegiatan ini bukan pilihan utama namun tetap dapat dicoba.
+
+                @endif
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+@endif
 
         </div>
 
@@ -468,104 +472,94 @@ canvas{
 
                     <div class="d-flex flex-column gap-4">
 
-                        @if(count($rekomendasi))
+                        @if($rekomendasiUtama)
 
-                            @foreach($rekomendasi as $item)
+<div class="bg-light rounded-4 p-4 shadow-sm">
 
-                            <div class="bg-light rounded-4 p-4 shadow-sm">
+    <div class="d-flex align-items-center gap-4 flex-wrap">
 
-                                <div class="d-flex align-items-center gap-4 flex-wrap">
+        <img
+            src="{{ asset('storage/'.$rekomendasiUtama['gambar']) }}"
+            width="110"
+            height="110"
+            class="rounded-4 object-fit-cover"
+        >
 
-                                    {{-- GAMBAR --}}
-                                    <img
-                                        src="{{ asset('storage/'.$item['gambar']) }}"
-                                        width="110"
-                                        height="110"
-                                        class="rounded-4 object-fit-cover"
-                                    >
+        <div class="flex-grow-1">
 
-                                    {{-- INFO --}}
-                                    <div class="flex-grow-1">
+            <h4 class="fw-bold text-success mb-2">
+                {{ $rekomendasiUtama['nama'] }}
+            </h4>
 
-                                        <h4 class="fw-bold text-success mb-2">
+            <div class="mb-2 d-flex gap-2 flex-wrap">
 
-                                            {{ $item['nama'] }}
+                <span class="badge bg-success">
+                    Skor:
+                    {{ $rekomendasiUtama['skor'] }}
+                </span>
 
-                                        </h4>
+                @php
+                    $persen = $rekomendasiUtama['persen'] ?? 0;
 
-                                        <div class="mb-2 d-flex gap-2 flex-wrap">
+                    if ($persen >= 80) {
+                        $kategori = 'Sangat Tinggi';
+                    } elseif ($persen >= 60) {
+                        $kategori = 'Cukup Baik';
+                    } elseif ($persen >= 40) {
+                        $kategori = 'Sedang';
+                    } else {
+                        $kategori = 'Rendah';
+                    }
+                @endphp
 
-    <span class="badge bg-success">
+                <span class="badge bg-dark">
+                    {{ $persen }}%
+                </span>
 
-        Skor:
-        {{ $item['skor'] }}
+            </div>
 
-    </span>
+            <p class="text-muted small mt-3 mb-0">
 
-    @php
-    $persen = $item['persen'] ?? 0;
+                {{ $rekomendasiUtama['deskripsi_rekomendasi'] }}
 
-    if ($persen >= 80) {
-        $kategori = 'Sangat Tinggi';
-    } elseif ($persen >= 60) {
-        $kategori = 'Cukup Baik';
-    } elseif ($persen >= 40) {
-        $kategori = 'Sedang';
-    } else {
-        $kategori = 'Rendah';
-    }
-@endphp
+                <br><br>
 
-<span class="badge bg-dark">
-    {{ $persen }}%
-</span>
+                Tingkat kecocokan:
+                <strong>{{ $persen }}%</strong>
+
+                @if($persen >= 80)
+                    (Sangat Tinggi)
+                @elseif($persen >= 60)
+                    (Cukup Baik)
+                @elseif($persen >= 40)
+                    (Sedang)
+                @else
+                    (Rendah)
+                @endif
+
+            </p>
+
+        </div>
+
+    </div>
 
 </div>
 
-                                        <p class="text-muted small mt-3 mb-0">
+@else
 
-    {{ $item['deskripsi_rekomendasi'] }}
+<div class="alert alert-warning rounded-4">
 
-    <br><br>
+    <h5 class="mb-2">
+        Belum Ada Rekomendasi
+    </h5>
 
-    Tingkat kecocokan:
-    <strong>{{ $item['persen'] }}%</strong>
+    <p class="mb-0">
+        Berdasarkan jawaban yang diberikan,
+        belum ditemukan kecocokan yang cukup
+        terhadap ekstrakurikuler tertentu.
+    </p>
 
-    @if(($item['persen'] ?? 0) >= 80)
-        (Sangat tinggi)
-    @elseif(($item['persen'] ?? 0) >= 60)
-        (Cukup baik)
-    @elseif(($item['persen'] ?? 0) >= 40)
-        (Sedang)
-    @else
-        (Rendah)
-    @endif
-
-</p>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        @endforeach
-
-                        @else
-
-    <div class="alert alert-warning rounded-4">
-
-        <h5 class="mb-2">
-            Belum Ada Rekomendasi
-        </h5>
-
-        <p class="mb-0">
-            Berdasarkan jawaban yang diberikan,
-            belum ditemukan kecocokan yang cukup
-            terhadap ekstrakurikuler tertentu.
-        </p>
-
-    </div>
+</div>
 
 @endif
 
@@ -583,7 +577,7 @@ canvas{
 
 <script>
 
-const chartData = @json($skor);
+const chartData = @json($chartSkor);
 
 const canvas =
     document.getElementById('resultChart');

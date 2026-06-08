@@ -905,13 +905,13 @@ body::after{
 
         </a> -->
 
-        <!-- <a href="{{ route('siswa.profil') }}"
+        <a href="{{ route('siswa.profil') }}"
         class="{{ request()->routeIs('siswa.profil*') ? 'active' : '' }}">
 
             <i class="bi bi-person-circle"></i>
             <span>Edit Profil</span>
 
-        </a> -->
+        </a>
 
         <!-- <a href="{{ route('siswa.jadwal') }}"
            class="{{ request()->routeIs('siswa.jadwal') ? 'active' : '' }}">
