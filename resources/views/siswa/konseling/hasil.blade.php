@@ -296,15 +296,7 @@ canvas{
         $rekomendasiAlternatif = collect($rekomendasiLainnya)->first();
     }
 
-    $chartSkor = [];
-
-    if($rekomendasiUtama){
-        $chartSkor[$rekomendasiUtama['nama']] = $rekomendasiUtama['persen'];
-    }
-
-    if($rekomendasiAlternatif){
-        $chartSkor[$rekomendasiAlternatif['nama']] = $rekomendasiAlternatif['persen'];
-    }
+    $chartSkor = $skor ?? [];
 @endphp
 
 <div class="container py-5">
@@ -356,7 +348,7 @@ canvas{
     @endif
 
 {{-- REKOMENDASI ALTERNATIF --}}
-@if(isset($rekomendasiLainnya) && count($rekomendasiLainnya))
+@if(!empty($rekomendasiLainnya))
 
 <div class="mt-2">
 
@@ -402,18 +394,20 @@ canvas{
                         </span>
 
                         @php
-                            $persen = $rekomendasiAlternatif['persen'] ?? 0;
+    $persen = $rekomendasiAlternatif['persen_chart']
+        ?? $rekomendasiAlternatif['persen']
+        ?? 0;
 
-                            if ($persen >= 80) {
-                                $kategori = 'Sangat Tinggi';
-                            } elseif ($persen >= 60) {
-                                $kategori = 'Cukup Baik';
-                            } elseif ($persen >= 40) {
-                                $kategori = 'Sedang';
-                            } else {
-                                $kategori = 'Rendah';
-                            }
-                        @endphp
+    if ($persen >= 80) {
+        $kategori = 'Sangat Tinggi';
+    } elseif ($persen >= 60) {
+        $kategori = 'Cukup Baik';
+    } elseif ($persen >= 40) {
+        $kategori = 'Sedang';
+    } else {
+        $kategori = 'Rendah';
+    }
+@endphp
 
                         <span class="badge bg-dark">
                             {{ $persen }}% - {{ $kategori }}
@@ -499,7 +493,7 @@ canvas{
                 </span>
 
                 @php
-                    $persen = $rekomendasiUtama['persen'] ?? 0;
+                    $persen = $rekomendasiUtama['persen_chart'] ?? 0;
 
                     if ($persen >= 80) {
                         $kategori = 'Sangat Tinggi';

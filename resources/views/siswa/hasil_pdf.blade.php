@@ -225,7 +225,7 @@ $rekomendasiAlternatif = $rekomendasiAlternatif ?? null;
                 </span>
 
                 @php
-                    $persen = $rekomendasiUtama['persen'] ?? 0;
+                    $persen = $rekomendasiUtama['persen_chart'] ?? 0;
 
                     if ($persen >= 80) {
                         $kategori = 'Sangat Tinggi';
@@ -238,9 +238,9 @@ $rekomendasiAlternatif = $rekomendasiAlternatif ?? null;
                     }
                 @endphp
 
-                <span class="badge badge-dark">
+                {{-- <span class="badge badge-dark">
                     {{ $persen }}% - {{ $kategori }}
-                </span>
+                </span> --}}
 
                 <div class="desc">
 
@@ -306,7 +306,7 @@ $rekomendasiAlternatif = $rekomendasiAlternatif ?? null;
             </span>
 
             @php
-                $persen = $rekomendasiAlternatif['persen'] ?? 0;
+                $persen = $rekomendasiAlternatif['persen_chart'] ?? 0;
 
                 if ($persen >= 80) {
                     $kategori = 'Sangat Tinggi';
@@ -319,27 +319,35 @@ $rekomendasiAlternatif = $rekomendasiAlternatif ?? null;
                 }
             @endphp
 
-            <span class="badge badge-dark">
+            {{-- <span class="badge badge-dark">
                 {{ $persen }}% - {{ $kategori }}
-            </span>
+            </span> --}}
 
             <div class="desc">
 
-                {{ $rekomendasiAlternatif['deskripsi_rekomendasi'] ?? '' }}
+                {{-- {{ $rekomendasiAlternatif['deskripsi_rekomendasi'] ?? '' }}
 
                 <br><br>
 
                 Tingkat kecocokan:
-                <strong>{{ $persen }}%</strong>
+                <strong>{{ $persen }}%</strong> --}}
 
                 @if($persen >= 80)
-                    (Sangat Tinggi)
+
+                    Sebagai rekomendasi alternatif, ekstrakurikuler ini memiliki tingkat kecocokan yang sangat tinggi yaitu {{ $persen }}%.
+
                 @elseif($persen >= 60)
-                    (Cukup Baik)
+
+                    Ekstrakurikuler ini memiliki tingkat kecocokan sebesar {{ $persen }}% dan dapat menjadi pilihan alternatif yang baik.
+
                 @elseif($persen >= 40)
-                    (Sedang)
+
+                    Dengan tingkat kecocokan {{ $persen }}%, ekstrakurikuler ini masih dapat membantu mengembangkan kemampuan dan pengalaman baru.
+
                 @else
-                    (Rendah)
+
+                    Tingkat kecocokan sebesar {{ $persen }}% menunjukkan bahwa kegiatan ini bukan pilihan utama namun tetap dapat dicoba.
+
                 @endif
 
             </div>

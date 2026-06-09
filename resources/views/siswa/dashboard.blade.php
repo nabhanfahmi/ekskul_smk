@@ -905,13 +905,13 @@ body::after{
 
         </a> -->
 
-        <a href="{{ route('siswa.profil') }}"
+        {{-- <a href="{{ route('siswa.profil') }}"
         class="{{ request()->routeIs('siswa.profil*') ? 'active' : '' }}">
 
             <i class="bi bi-person-circle"></i>
             <span>Edit Profil</span>
 
-        </a>
+        </a> --}}
 
         <!-- <a href="{{ route('siswa.jadwal') }}"
            class="{{ request()->routeIs('siswa.jadwal') ? 'active' : '' }}">
@@ -1014,7 +1014,7 @@ body::after{
 
     </div>
 
-    <div class="topbar-right">
+    {{-- <div class="topbar-right">
 
         <img
             src="{{ auth()->user()->foto
@@ -1022,7 +1022,7 @@ body::after{
     : 'https://i.pravatar.cc/200?u=' . auth()->user()->id }}"
             class="topbar-avatar">
 
-    </div>
+    </div> --}}
 
 </div>
 

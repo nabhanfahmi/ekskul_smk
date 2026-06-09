@@ -67,9 +67,9 @@ class KonselingController extends Controller
             return $b['persen'] <=> $a['persen'];
         });
 
-        $topSkor = array_slice($skor, 0, 3, true);
+        $topSkor = array_slice($skor, 0, 1, true);
 
-        $skorLainnya = array_slice($skor, 3, null, true);
+        $skorLainnya = array_slice($skor, 1, 2, true);
 
         /*
         |--------------------------------------------------------------------------
@@ -136,6 +136,29 @@ class KonselingController extends Controller
     ->values()
     ->toArray();
 
+    if (!empty($rekomendasi) && !empty($rekomendasiLainnya)) {
+
+    $persenUtamaAsli = $rekomendasi[0]['persen'];
+    $persenAlternatifAsli = $rekomendasiLainnya[0]['persen'];
+
+    $total = $persenUtamaAsli + $persenAlternatifAsli;
+
+    if ($total > 0) {
+
+        $persenUtamaChart =
+            round(($persenUtamaAsli / $total) * 100);
+
+        $persenAlternatifChart =
+            100 - $persenUtamaChart;
+
+        $rekomendasi[0]['persen_chart'] =
+            $persenUtamaChart;
+
+        $rekomendasiLainnya[0]['persen_chart'] =
+            $persenAlternatifChart;
+    }
+}
+
         /*
         |--------------------------------------------------------------------------
         | SIMPAN SEMUA REKOMENDASI
@@ -173,11 +196,19 @@ class KonselingController extends Controller
 
         $chartData = [];
 
-        foreach ($semuaRekomendasi as $item) {
+if (!empty($rekomendasi)) {
 
-            $chartData[$item['nama']] =
-                $item['persen'];
-        }
+    $chartData[$rekomendasi[0]['nama']] =
+        $rekomendasi[0]['persen_chart']
+        ?? $rekomendasi[0]['persen'];
+
+    if (!empty($rekomendasiLainnya)) {
+
+        $chartData[$rekomendasiLainnya[0]['nama']] =
+            $rekomendasiLainnya[0]['persen_chart']
+            ?? $rekomendasiLainnya[0]['persen'];
+    }
+}
 
         return view('siswa.konseling.hasil', [
 
