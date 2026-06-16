@@ -310,7 +310,7 @@ canvas{
 
                 <h2 class="text-success fw-bold mb-0">
 
-                    Rekomendasi Ekstrakurikuler Untuk Kamu
+                    Rekomendasi Ekstrakurikuler Untuk Kamu:
 
                 </h2>
 
