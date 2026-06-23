@@ -935,7 +935,7 @@ body::after{
             <i class="bi bi-megaphone-fill"></i>
             <span>Pengumuman</span>
 
-        </a>
+        </a> -->
 
         <a href="{{ route('siswa.profil') }}"
            class="{{ request()->routeIs('siswa.profil') ? 'active' : '' }}">
@@ -943,7 +943,7 @@ body::after{
             <i class="bi bi-person-circle"></i>
             <span>Profil Saya</span>
 
-        </a> -->
+        </a>
 
     </div>
 

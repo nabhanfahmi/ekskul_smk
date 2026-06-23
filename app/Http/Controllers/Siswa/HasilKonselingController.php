@@ -10,6 +10,9 @@ class HasilKonselingController extends Controller
 {
     public function downloadPdf()
     {
+
+        ini_set('memory_limit', '512M');
+
         $hasil = HasilKonseling::where(
             'user_id',
             auth()->id()
@@ -74,6 +77,9 @@ class HasilKonselingController extends Controller
 
     public function downloadPdfDetail($id)
     {
+
+        ini_set('memory_limit', '512M');
+
         $hasil = HasilKonseling::where(
             'user_id',
             auth()->id()
