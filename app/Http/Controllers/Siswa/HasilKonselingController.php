@@ -70,6 +70,11 @@ class HasilKonselingController extends Controller
             )
         );
 
+//         $pdf = Pdf::loadHTML('
+//     <h1>Test PDF</h1>
+//     <p>Hello World</p>
+// ');
+
         return $pdf->download(
             'hasil-konseling.pdf'
         );
