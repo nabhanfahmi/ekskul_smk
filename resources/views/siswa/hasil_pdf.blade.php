@@ -80,7 +80,7 @@ body{
 }
 
 .image-col{
-    width:130px;
+    width:60px;
     vertical-align:top;
 }
 
@@ -90,10 +90,10 @@ body{
 }
 
 .image{
-    width:115px;
-    height:115px;
+    width:50px;
+    height:50px;
     object-fit:cover;
-    border-radius:10px;
+    border-radius:6px;
 }
 
 .nama{
@@ -209,7 +209,8 @@ $rekomendasiAlternatif = $rekomendasiAlternatif ?? null;
                 @if(!empty($rekomendasiUtama['gambar']))
                     <img
                         src="{{ public_path('storage/'.$rekomendasiUtama['gambar']) }}"
-                        class="image">
+                        class="image"
+                        alt="Gambar">
                 @endif
 
             </td>
@@ -290,7 +291,8 @@ $rekomendasiAlternatif = $rekomendasiAlternatif ?? null;
             @if(!empty($rekomendasiAlternatif['gambar']))
                 <img
                     src="{{ public_path('storage/'.$rekomendasiAlternatif['gambar']) }}"
-                    class="image">
+                    class="image"
+                    alt="Gambar">
             @endif
 
         </td>

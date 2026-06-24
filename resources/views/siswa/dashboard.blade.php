@@ -937,13 +937,13 @@ body::after{
 
         </a> -->
 
-        <a href="{{ route('siswa.profil') }}"
+        <!-- <a href="{{ route('siswa.profil') }}"
            class="{{ request()->routeIs('siswa.profil') ? 'active' : '' }}">
 
             <i class="bi bi-person-circle"></i>
             <span>Profil Saya</span>
 
-        </a>
+        </a> -->
 
     </div>
 
